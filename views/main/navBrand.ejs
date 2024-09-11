@@ -1,0 +1,28 @@
+<!-- CSS -->
+<link rel="stylesheet" href="/stylesheets/navBrand.css">
+
+<!-- Brands filter -->
+<div class="container py-2" id="navBrand">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-2 col-4" style="text-align: center; margin: 5px 0px">
+            <div class="d-flex justify-content-center align-items-center"
+                style="padding: 0; width: 110px; height: 40px; margin: auto;">
+                <a href="/catalog/<%= category %>" class="btn" id="brand-link">
+                    <img src="/images/logo_brand/Remove.png" alt="Remove filter" class="figure-img img-fluid rounded"
+                        id="brand-img">
+                </a>
+            </div>
+        </div>
+        <% brands.forEach((brand)=> { %>
+            <div class="col-md-2 col-4" style="text-align: center;">
+                <div class="d-flex justify-content-center align-items-center"
+                    style="padding: 0; width: 110px; height: 40px; margin: auto;">
+                    <a href="/catalog/<%= category %>/<%= brand %>" class="btn" id="brand-link">
+                        <img src="/images/logo_brand/<%= brand %>.png" alt="<%= brand %>"
+                            class="figure-img img-fluid rounded" id="brand-img">
+                    </a>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+</div>

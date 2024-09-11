@@ -1,0 +1,174 @@
+<%- include('../main/header') %>
+    <%- include('../main/navbar') %>
+        <link rel="stylesheet" href="/stylesheets/createPost.css">
+
+        <!--CSS-->
+        <style>
+            .dark-mode #postTitle {
+                color: white;
+            }
+        </style>
+
+        <div id="postTitle">
+            <h1>B1nance's Forum</h1>
+        </div>
+
+        <!-- Post cards -->
+        <div id="postList">
+            <div class="container">
+                <div class="row justify-content-start align-items-center g-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6" id="addComment">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Create a post
+                        </button>
+                    </div>
+                    <div class="col-lg-8 col-md-6 col-sm-6">
+                        <form class="forumFilter" action="/forum/search" method="get">
+                            <div class="forumSearchBox">
+                                <button class="btnSearch"><i class="fas fa-search"></i></button>
+                                <input type="text" class="forumInputSearch" placeholder="Search for a post" name="q">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <style>
+                            .dark-mode label {
+
+                                color: white;
+                            }
+                        </style>
+                        <label for="sortSelect">Order By</label>
+                        <select id="sortSelect" class="form-select sortDay">
+                            <option value="desc" >Descending By Date</option>
+                            <option value="asc" selected>Ascending By Date</option>
+                        </select>
+                        <label for="filter">Filter By</label>
+                        <select name="filter" id="filter" class="form-select sortDay">
+                            <option value="default" selected>Default</option>
+                            <option value="headphone">Headphone</option>
+                            <option value="laptop">Laptop</option>
+                            <option value="mobile">Mobile</option>
+                        </select>
+                        <label for="groupby">Group By</label>
+                        <select name="groupby" id="groupby" class="form-select sortDay">
+                            <option value="default" selected>Default</option>
+                            <option value="category">Category</option>
+                            <option value="date">Date</option>
+                        </select>
+                    </div>
+
+
+                    <div id="postContainer">
+                        <% posts.forEach((post)=> { %>
+                            <% if (post.authorId.active===true) { %>
+                                <div class="col-lg-12 col-md-12 col-sm-12"
+                                    id="<%= new Date(post.createdAt).toLocaleString() %>"
+                                    data-category="<%= post.category %>"
+                                    data-date="<%= new Date(post.createdAt).toLocaleString() %>">
+                                        <%- include('./components/card.ejs', { item: post }) %>
+
+                                </div>
+                                <% } %>
+                                    <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Create a post</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="createPostForm" class="createPost" action="/forum/post" method="post"
+                            enctype="multipart/form-data" accept="image/png, image/jpeg">
+                            <div class="title">
+                                <h3>Title</h3>
+                                <p>Make sure your title is specific and related to your contents.</p>
+                                <input name="title" type="text" class="form-control inputTitle" id="inputTitle"
+                                    placeholder="Rating about Iphone 15" aria-describedby="text">
+                                <div class="errorTitle"></div>
+                                <div class="button hide">
+                                    <button type="button" class="nextBtn">Next</button>
+                                </div>
+                                <label for="category">Category</label>
+                                <select name="category" class="select-form" id="category" required>
+                                    <option value="mobile" selected>Mobile</option>
+                                    <option value="headphone">Headphone</option>
+                                    <option value="laptop">Laptop</option>
+                                </select>
+                            </div>
+                            <div class="content blur">
+                                <input name="img" type="file" id="img" class="inputImage"
+                                    accept="image/png, image/jpeg">
+                                <label for="img" class="disabledCursor inputImageBtn">Add Image <svg
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-images" viewBox="0 0 16 16">
+                                        <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
+                                        <path
+                                            d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1z" />
+                                    </svg></label>
+                                <div id="display_image" style="display: none;"><button id="clear_image"
+                                        class="btn btn-danger btn-sm" type="button">X</button></div>
+
+                                <textarea name="body" placeholder="Enter your contents" id="inputContent"
+                                    class="form-control inputContent" disabled></textarea>
+                                <div class="errorContent"></div>
+                                <div class="submitBtnDiv hide" style="display: none;">
+                                    <button type="submit" class="submitBtn" id="createPostFormBtn">Post</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="triggerButton">Post</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="/js/createPost.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const postsContainer = document.getElementById('postContainer')
+                const sortSelect = document.getElementById('sortSelect')
+
+
+                const sortByCreatedAt = (order) => {
+                    const posts = Array.from(postsContainer.children)
+
+                    posts.sort((a, b) => {
+                        const createdAtA = Date.parse(a.id)
+                        const createdAtB = Date.parse(b.id)
+
+                        if (order === 'asc') {
+                            return createdAtA - createdAtB
+                        } else {
+                            return createdAtB - createdAtA
+                        }
+                    })
+
+                    while (postsContainer.firstChild) {
+                        postsContainer.removeChild(postsContainer.firstChild)
+                    }
+
+                    posts.forEach((post) => {
+                        postsContainer.appendChild(post)
+                    })
+                }
+
+                sortSelect.addEventListener('change', (event) => {
+                    const selectedOrder = event.target.value
+                    sortByCreatedAt(selectedOrder)
+                })
+                sortByCreatedAt('asc')
+            })
+        </script>
+
+        <%- include('../main/footer') %>

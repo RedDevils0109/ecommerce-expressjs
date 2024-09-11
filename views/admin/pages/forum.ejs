@@ -1,0 +1,209 @@
+<%- include('../main/header.ejs') %>
+    <%- include('../main/navbar.ejs') %>
+        <style>
+            #post-card:hover {
+                background-color: goldenrod;
+            }
+        </style>
+        <div class="container">
+            <div class="container">
+                <link rel="stylesheet" href="/stylesheets/admin.css">
+                <form class="forumFilter" action="/admin/forum/search" method="get">
+                    <div class="forumSearchBox">
+                        <button class="btnSearch"><i class="fas fa-search"></i></button>
+                        <input type="text" class="forumInputSearch" placeholder="Search by title" name="q">
+                    </div>
+                </form>
+                <label for="filter">Filter</label>
+                <select name="filter" id="filter" class="form-select">
+                    <option value="default" selected>All</option>
+                    <option value="normal">Normal</option>
+                    <option value="delete">Deleted</option>
+                    <option value="archive">Archived</option>
+                </select>
+                <!-- <label for="groupby">Group By</label>
+                <select name="groupby" id="groupby" class="form-select">
+                    <option value="author" selected>Author</option>
+                    <option value="status">Status</option>
+                </select> -->
+                <label for="orderby">Order By</label>
+                <select name="orderby" id="orderby" class="form-select">
+                    <option value="desc"> Date Descending</option>
+                    <option value="asc" selected> Date Ascending</option>
+                </select>
+            </div>
+            <div id="postList">
+                <% posts.forEach((p)=> { %>
+                    <div class="row" data-delete='<% if (p.delete) { %>true<% } else { %>false<% } %>'
+                        data-archive='<% if (p.archive) { %>true<% } else { %>false<% } %>'
+                        data-date="<%= new Date(p.createdAt).toISOString() %>" data-author="<%= p.authorId.username %>">
+                        <!-- Comment -->
+                        <div class="col-8">
+                            <a href="/admin/forum/view/<%= p._id %>" style="text-decoration: none;">
+                                <div class='card m-3' id="post-card">
+                                    <% if (p.delete) { %>
+                                        <p class="caption bg-danger">Deleted</p>
+                                        <% } else if (p.archive) { %>
+                                            <p class="caption bg-warning">Archived</p>
+                                            <% } else { %>
+                                                <p class="caption bg-success">Active</p>
+                                                <%} %>
+
+                                                    <div class="card-body">
+                                                        <!-- Author name and time -->
+                                                        <p class="card-title d-flex justify-content-between">
+                                                            <span class="col-3">
+                                                                Title: <%= p.title %>
+                                                            </span>
+                                                            <span>
+                                                                <i>
+                                                                    <%= p.createdAt.toLocaleString(undefined, {
+                                                                        dateStyle: 'medium' , timeStyle: 'short' ,
+                                                                        hour12: false }) %>
+                                                                </i>
+                                                            </span>
+                                                        </p>
+                                                        <hr>
+                                                        <p class="d-flex justify-content-between">
+                                                            <span class="col-3">
+                                                                Posted by: <%= p.authorId.username %>
+                                                            </span>
+                                                            <span>
+                                                                <%= p.reply.length %> Replies
+                                                            </span>
+                                                        </p>
+                                                        <!-- Comment content -->
+                                                        <div class="d-flex justify-content-between">
+
+                                                            <p class="card-text col-12 col-md-8">
+                                                                <% if (p.imgURL) { %>
+                                                                    <img src="<%= p.imgURL %>" alt="Post Image"
+                                                                        class="img-fluid" height="300px" width="300px">
+                                                                    <% } %>
+                                                            </p>
+                                                            <% if (p.delete) { %>
+                                                                <% } else { %>
+                                                                    <div class=" col-12 col-md-4">
+                                                                        <form action="/admin/deletePost?_method=DELETE"
+                                                                            method="post">
+                                                                            <input type="text" name="postId"
+                                                                                value="<%= p._id %>" hidden>
+                                                                            <button
+                                                                                class="btn btn-danger">Delete</button>
+                                                                        </form>
+                                                                        <form action="/admin/archivePost?_method=PUT"
+                                                                            method="post">
+                                                                            <input type="text" name="postId"
+                                                                                value="<%= p._id %>" hidden>
+                                                                            <% if(p.archive) { %>
+                                                                                <button
+                                                                                    class="btn btn-warning">UN-archive</button>
+                                                                                <% } else {%>
+                                                                                    <button
+                                                                                        class="btn btn-warning">Archive</button>
+                                                                                    <% } %>
+                                                                        </form>
+                                                                    </div>
+                                                                    <% } %>
+                                                        </div>
+                                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                    <% }); %>
+            </div>
+        </div>
+
+        <%- include('../main/footer.ejs') %>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const postList = document.getElementById("postList")
+                    const posts = [...document.querySelectorAll("#postList .row")]
+
+                    function renderPosts(posts) {
+                        postList.innerHTML = ""
+                        posts.forEach(post => {
+                            postList.appendChild(post)
+                        })
+                    }
+
+                    const filter = document.getElementById("filter")
+                    // const groupby = document.getElementById("groupby")
+                    const orderby = document.getElementById("orderby")
+
+                    filter.addEventListener("change", () => {
+                        filterPost()
+                    })
+
+                    // groupby.addEventListener("change", () => {
+                    //     groupPost()
+                    // })
+
+                    orderby.addEventListener("change", () => {
+                        orderPost()
+                    })
+
+                    const filterPost = () => {
+                        const filter_by = filter.value
+                        if (filter_by === "default") {
+                            posts.forEach((item) => {
+                                item.hidden = false
+                            })
+                        } else if (filter_by === "archive") {
+                            posts.forEach((item) => {
+                                item.hidden = (item.dataset.archive === "true" && item.dataset.delete !== "true") ? false : true
+                            })
+                        } else if (filter_by === "delete") {
+                            posts.forEach((item) => {
+                                item.hidden = (item.dataset.delete === "true") ? false : true
+                            })
+                        } else if (filter_by === "normal") {
+                            posts.forEach((item) => {
+                                item.hidden = (item.dataset.delete === "true") || (item.dataset.archive === "true") ? true : false
+                            })
+
+                        }
+
+                        renderPosts(posts)
+                    }
+
+                    // const groupPost = () => {
+                    //     const group_by = groupby.value
+                    //     let groupedPosts = []
+
+                    //     if (group_by === "author") {
+                    //         groupedPosts = [...posts].sort((a, b) => a.dataset.author.localeCompare(b.dataset.author))
+                    //     } else if (group_by === "status") {
+                    //         groupedPosts = [...posts].sort((a, b) => {
+                    //             if (a.dataset.delete === "true" && b.dataset.delete !== "true") return -1
+                    //             if (a.dataset.delete !== "true" && b.dataset.delete === "true") return 1
+                    //             if (a.dataset.archive === "true" && b.dataset.archive !== "true") return -1
+                    //             if (a.dataset.archive !== "true" && b.dataset.archive === "true") return 1
+                    //             return 0
+                    //         })
+                    //     }
+
+                    //     renderPosts(groupedPosts)
+                    // }
+
+                    const orderPost = () => {
+                        const order_by = orderby.value
+                        let orderedPosts = []
+
+                        if (order_by === "asc") {
+                            orderedPosts = [...posts].sort((a, b) => new Date(a.dataset.date) - new Date(b.dataset.date))
+                        } else if (order_by === "desc") {
+                            orderedPosts = [...posts].sort((a, b) => new Date(b.dataset.date) - new Date(a.dataset.date))
+                        }
+
+                        renderPosts(orderedPosts)
+                    }
+
+                    filterPost()
+                    groupPost()
+                    orderPost()
+                })
+            </script>

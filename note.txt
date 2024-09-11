@@ -1,0 +1,6 @@
+Color palette: 
+#212529: Dark gray
+#28282b: Light gray
+#ffc107: Yellow
+
+  

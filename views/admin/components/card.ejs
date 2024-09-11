@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="/stylesheets/postcard.css">
+
+<div class="post-container">
+    <a href="/admin/order/<%= item._id %>" class="post-link">
+        <div class="post">
+            <div class="post-header">
+                <h2>Users <%= item.userId.name %></h2>
+                <p>Status: <%= item.status %></p>
+                <div class="post-author">
+                    Post at: <%= new Date(item.createdAt).toLocaleString() %>
+                </div>
+                <% item.products.forEach( product => { %>
+                    <div class="productDetail">
+                        <%= product.quantity %>x 
+                        <%= product.productId.name %>
+                    </div>
+                    <% }) %>
+            </div>
+            
+            <div class="post-content">
+                <p class="post-content" id="productDescription" style="overflow: hidden; height: 120px;">Total: <%= item.total %></p>
+            </div>  
+        </div>  
+    </a>
+    <form id="orderForm" action="/order/admin-update?_method=PUT" method="post">
+        <input type="text" value="<%= item._id %>" name="orderId" hidden>
+        <select name="status" id="status" class="form-select">
+            <option value="Delivered" class="bg-primary" <% if (item.status === 'Delivered') { %> selected <% } %>>Delivered</option>
+            <option value="Delivering" class="bg-warning" <% if (item.status === 'Delivering') { %> selected <% } %>>Delivering</option>
+            <option value="Cancel" class="bg-danger" <% if (item.status === 'Cancel') { %> selected <% } %>>Cancel</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>      
+</div>
+

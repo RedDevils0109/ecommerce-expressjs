@@ -1,0 +1,231 @@
+<%- include('../main/header') %>
+    <%- include('../main/navbar') %>
+        <!-- CSS -->
+        <link rel="stylesheet" href="/stylesheets/account.css">
+        <div class="account-page">
+            <div class="btn-group dropend">
+                <!-- <button type="button" id="button1" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Options
+                </button> -->
+                <div class="dropdown-menu sidebar">
+                    <div>Setting</div>
+                    <hr class="topLine">
+                    <a href="/account/edit/<%= user._id %>" id="updateInfo" class="btn my-2">Update info</a>
+                    <button class="btn my-2" id="updatePasswordButton">Update Password</button>
+                    <hr>
+                    <form id="triggerActiveAccount" action="/account/active/<%= user._id %>" method="post">
+                        <button class="btn ">
+                            <%= user.active ? 'Deactivate account' : 'Active Account' %>
+                    </form>
+                    <form action="/logout" method="post"><button class="btn">Log out </button></form>
+                </div>
+            </div>
+
+            <div class="sidebar2 ">
+                <p>Setting</p>
+                <hr class="topLine">
+                <!-- <button class="btn my-2" id="updatePasswordButton2">Update Password</button> -->
+                <div class="bottom-content">
+                    <hr>
+                    <form id="triggerActiveAccount" action="/account/active/<%= user._id %>" method="post">
+                        <button class="btn" id="toggleActiveAccount">
+                            <%= user.active ? 'Deactivate account' : 'Active Account' %>
+                    </form>
+                    <!-- <form action="/logout" method="post"><button class="btn">Log out </button></form> -->
+                </div>
+            </div>
+
+            <!--Wrapper-->
+            <div class="wrapper">
+                <!--user info-->
+                <div class="userInfo">
+                    <div class=" border border-dark rounded-circle" style="padding: 0; width: 200px; height: 200px; margin: auto; margin-top: 20px; margin-bottom: 40px;">
+                        <img src="<%= user.profileImg%>" alt="profile pic"
+                            style="height: 100%; width: 100%; object-fit: center;">
+                    </div>
+                    <div><b>Name:</b>
+                        <%= user.name %>
+                    </div>
+                    <div><b>Username: </b>
+                        <%= user.username %>
+                    </div>
+                    <div><b>Email:</b>
+                        <%= user.email %>
+                    </div>
+                    <div><b>Phone number:</b>
+                        <%= user.phone %>
+                    </div>
+                    <div><b>Role: </b>
+                        <%= user.role.charAt(0).toUpperCase() + user.role.slice(1) %>
+                    </div>
+                    <div><b>Update your information <a href="/account/edit/<%= user._id %>" id="updateInfo"
+                                class="my-2">here</a></b>
+                    </div>
+                    <div><b>View your archive posts <a href="/forum/archievePost" id="updateInfo"
+                                class="my-2">here</a></b>
+                    </div>
+                    <div style="display: none;"> <a href="/account/edit/<%= user._id %>" id="updateInfo"
+                            class="my-2">Update info</a>
+                    </div>
+                </div>
+
+                <!--Second wrapper-->
+                <div class="secondWrapper">
+                    <!--Current products-->
+                    <div class="product"> 
+                        <div> Order in progress: <%= order.length%> </div>
+                        <a href="/order">
+                            <button class="orderBtn">View Orders</button>
+                        </a>
+                    </div>
+
+                    <!--Account status-->
+                    <div class="accountStatus">
+                        <div>Account Status</div>
+                        <div style="width: 100%; display: flex;
+                        justify-content: center;
+                        align-items: center; cursor: default;">
+                            <% if (user.active===true) { %>
+                                <div id="status" style="background-color: #228B22; color: white;">Active</div>
+                                <% } else { %>
+                                    <div id="status" style="background-color: #FF3131; color: white;">Not Active</div>
+                                    <% } %>
+                        </div>
+                        <div><a href="/account" id="triggerForm">
+                                <%= user.active ? 'Deactivate account' : 'Activate Account' %>?
+                            </a></div>
+                    </div>
+
+                    <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/iphone-15-17390-sliding.png"
+                                    class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/samsung-galaxy-m34-5g-home-page.png"
+                                    class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/sony-xperia-10-sliding.jpg"
+                                    class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/redme-note-13-sliding.jpg"
+                                    class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/690x300.jpg"
+                                    class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/Asus_sliding.2.jpg"
+                                    class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="0" class="active"
+                                aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                            <button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="3"
+                                aria-label="Slide 4"></button>
+                            <button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="4"
+                                aria-label="Slide 5"></button>
+                            <button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="5"
+                                aria-label="Slide 6"></button>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal for Password Change -->
+            <div class="modal fade" id="passwordChangeModal" tabindex="-1" aria-labelledby="passwordChangeModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="passwordChangeModalLabel">Change Password</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Password Change Form -->
+                            <form id="passwordChangeForm" action="/change-password" method="POST">
+                                <div class="mb-3">
+                                    <label for="currentPassword" class="form-label">Current Password</label>
+                                    <input type="password" class="form-control" id="currentPassword" name="oldPass"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newPassword" class="form-label">New Password</label>
+                                    <input type="password" class="form-control" id="newPassword" name="newPass"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
+                                    <input type="password" class="form-control" id="confirmNewPassword"
+                                        name="confirmNewPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- JS -->
+        <script>
+            document.getElementById('triggerForm').addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('triggerActiveAccount').submit();
+            });
+            document.addEventListener('DOMContentLoaded', function () {
+                const passwordChangeForm = document.getElementById('passwordChangeForm');
+                const newPasswordInput = document.getElementById('newPassword');
+                const confirmNewPasswordInput = document.getElementById('confirmNewPassword');
+                const passwordError = document.getElementById('passwordError');
+
+                passwordChangeForm.addEventListener('submit', function (event) {
+                    // Check if passwords match
+                    if (newPasswordInput.value !== confirmNewPasswordInput.value) {
+                        event.preventDefault();
+                        passwordError.textContent = "Passwords do not match";
+                        newPasswordInput.classList.add('is-invalid');
+                        confirmNewPasswordInput.classList.add('is-invalid');
+                    } else {
+                        passwordError.textContent = "";
+                        newPasswordInput.classList.remove('is-invalid');
+                        confirmNewPasswordInput.classList.remove('is-invalid');
+                    }
+                });
+
+                // const updatePasswordButton = document.getElementById('updatePasswordButton');
+                const updatePasswordButton1 = document.getElementById('updatePasswordButton');
+                const updatePasswordButton2 = document.getElementById('updatePasswordButton2');
+
+                function showModal() {
+                    const passwordChangeModal = new bootstrap.Modal(document.getElementById('passwordChangeModal'));
+                    passwordChangeModal.show();
+                }
+
+                updatePasswordButton1.addEventListener('click', showModal);
+                updatePasswordButton2.addEventListener('click', showModal);
+            });
+        </script>
+        <script src="/js/account.js"></script>
+
+        <%- include('../main/footer') %>

@@ -1,0 +1,108 @@
+.post-title {
+    font-weight: bold;
+}
+
+.post-container {
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.dark-mode .post-container{
+    background-color: #28282b !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .eachPost, 
+.dark-mode .datePost, 
+.dark-mode .like-comment {
+    background-color: #28282b !important; 
+    color: white !important;
+}
+.dark-mode .likeBtn, 
+.dark-mode .commentBtn {
+    color: white;
+}
+.dark-mode .likeDiv:hover,
+.dark-mode .commentDiv:hover  {
+    background-color: rgba(239, 239, 240, 0.2);
+}
+
+.dark-mode .post-title,
+.dark-mode .post-author,
+.dark-mode .post-content,
+.dark-mode .post-header,
+.dark-mode .order-date {
+    color: white;
+}
+
+.fixed-size {
+    width: 60%;
+    max-height: 400px;
+    object-fit: center;
+}
+
+.post-container:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.dark-mode .post-container:hover {
+    box-shadow: 0 0 10px 0 rgba(255, 255, 255);
+}
+
+.post-container a {
+    color: #333;
+    text-decoration: none;
+}
+
+.post-header {
+    margin-bottom: 30px;
+}
+
+.post-author {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+.post-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.post-content {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.totalAndDate {
+    display: flex;
+    justify-content: space-between;
+}
+
+.titleOrderID {
+    margin-bottom: 30px;
+}
+
+.submit-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+}
+
+#post-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 600px) {
+    .totalAndDate {
+        flex-direction: column;
+    }
+}

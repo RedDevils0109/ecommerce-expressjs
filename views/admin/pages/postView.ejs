@@ -1,0 +1,227 @@
+<%- include('../main/header.ejs') %>
+    <%- include('../main/navbar.ejs') %>
+
+
+
+        <div class="container">
+
+            <span class="d-flex justify-content-between align-items-center">
+                <h1>Title : <%= post.title %>
+                </h1>
+                <% if (post.delete) { %>
+                    <% } else { %>
+                        <div class="d-flex justify-content-start align-items-center">
+                            <form action="/admin/deletePost?_method=DELETE" method="post">
+                                <input type="text" name="postId" value="<%= post._id %>" hidden>
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                            <form action="/admin/archivePost?_method=PUT" method="post">
+                                <input type="text" name="postId" value="<%= post._id %>" hidden>
+                                <% if(post.archive) { %>
+                                    <button class="btn btn-warning">UN-archive</button>
+                                    <% } else {%>
+                                        <button class="btn btn-warning">Archive</button>
+                                        <% } %>
+                            </form>
+                        </div>
+                        <% } %>
+            </span>
+
+
+            <p class="d-flex justify-content-between">
+                <span>Posted by: <%= post.authorId.username %></span>
+                <span><i>
+                        <%= post.createdAt.toLocaleString(undefined, { dateStyle: 'medium' , timeStyle: 'short' ,
+                            hour12: false }) %>
+                    </i></span>
+
+
+            </p>
+            <h2>Content</h2>
+            <p class="container justify-content-center align-items-center w-80">
+                <%= post.body %>
+                    <br>
+                    <% if (post.imgURL) { %>
+                        <img src="<%= post.imgURL %>" alt="Post Image" class="img-fluid" height="300px" width="300px">
+                        <% } %>
+            </p>
+            <h2>Replies</h2>
+            <div class="container">
+                <label for="filter">Filter</label>
+                <select name="filter" id="filter">
+                    <option value="default" selected>Default</option>
+                    <option value="normal">Normal</option>
+                    <option value="delete">Delete</option>
+                    <!-- <option value="archive">Archive</option> -->
+                </select>
+                <!-- <label for="groupby">Group By</label>
+                <select name="groupby" id="groupby">
+                    <option value="author" selected>Author</option>
+                    <option value="status">Status</option>
+                </select> -->
+                <label for="orderby">Order By</label>
+                <select name="orderby" id="orderby">
+                    <option value="desc"> Date Descending</option>
+                    <option value="asc" selected> Date Ascending</option>
+                </select>
+            </div>
+            <div id="replyList">
+                <% post.reply.forEach((r)=> { %>
+                    <div class="row" data-delete='<% if (r.delete) { %>true<% } else { %>false<% } %>'
+                        data-archive='<% if (r.archive) { %>true<% } else { %>false<% } %>'
+                        data-date="<%= new Date(r.createdAt).toISOString() %>" data-author="<%= r.authorId.username %>">
+                        <!-- Comment -->
+
+                        <div class="col-8">
+
+                            <div class='card mb-3'>
+                                <div class="card-body">
+
+                                    <% if (r.delete) { %>
+                                        <p class="caption bg-danger">Deleted</p>
+                                        <% } else if (r.archive) { %>
+                                            <p class="caption bg-danger">Archived</p>
+                                            <% } %>
+                                                <!-- Author name and time -->
+                                                <p class="card-title d-flex justify-content-between">
+                                                    <span>Posted by : <%= r.authorId.username %></span>
+                                                    <span><i>
+                                                            <%= r.createdAt.toLocaleString(undefined, {
+                                                                dateStyle: 'medium' , timeStyle: 'short' , hour12: false
+                                                                }) %>
+                                                        </i>
+                                                    </span>
+                                                </p>
+                                                <hr>
+
+
+
+                                                <!-- Comment content -->
+                                                <p class="card-text">
+                                                    <%= r.body %>
+                                                        <br>
+                                                        <% if (r.imgURL) { %>
+                                                            <img src="<%= r.imgURL %>" alt="Post Image"
+                                                                class="img-fluid" width="200px" height="200px">
+                                                            <% } %>
+
+                                                </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <% if (r.delete) { %>
+                                <% } else { %>
+                                    <form action="/admin/deleteReply?_method=DELETE" method="post">
+                                        <input type="text" name="replyId" value="<%= r._id %>" hidden>
+                                        <input type="text" name="postId" value="<%= post._id %>" hidden>
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+
+                                    <% } %>
+                        </div>
+                        <div class="col-3">
+
+                        </div>
+
+
+                    </div>
+                    <% }); %>
+            </div>
+
+        </div>
+
+
+
+        <%- include('../main/footer.ejs') %>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const replyList = document.getElementById("replyList")
+                    const replies = [...document.querySelectorAll("#replyList .row")]
+
+                    function renderPosts(replies) {
+                        replyList.innerHTML = ""
+                        replies.forEach(post => {
+                            replyList.appendChild(post)
+                        })
+                    }
+
+                    const filter = document.getElementById("filter")
+                    // const groupby = document.getElementById("groupby")
+                    const orderby = document.getElementById("orderby")
+
+                    filter.addEventListener("change", () => {
+                        filterPost()
+                    })
+
+                    // groupby.addEventListener("change", () => {
+                    //     groupPost()
+                    // })
+
+                    orderby.addEventListener("change", () => {
+                        orderPost()
+                    })
+
+                    const filterPost = () => {
+                        const filter_by = filter.value
+                        if (filter_by === "default") {
+                            replies.forEach((item) => {
+                                item.hidden = false
+                            })
+                            // } else if (filter_by === "archive") {
+                            //     replies.forEach((item) => {
+                            //         item.hidden = (item.dataset.archive === "true") ? false : true
+                            //     })
+                            //
+                        } else if (filter_by === "delete") {
+                            replies.forEach((item) => {
+                                item.hidden = (item.dataset.delete === "true") ? false : true
+                            })
+                        } else if (filter_by === "normal") {
+                            replies.forEach((item) => {
+                                item.hidden = (item.dataset.delete === "true") ? true : false
+                            })
+
+                        }
+
+                        renderPosts(replies)
+                    }
+
+                    // const groupPost = () => {
+                    //     const group_by = groupby.value
+                    //     let groupedPosts = []
+
+                    //     if (group_by === "author") {
+                    //         groupedPosts = [...replies].sort((a, b) => a.dataset.author.localeCompare(b.dataset.author))
+                    //     } else if (group_by === "status") {
+                    //         groupedPosts = [...replies].sort((a, b) => {
+                    //             if (a.dataset.delete === "true" && b.dataset.delete !== "true") return -1
+                    //             if (a.dataset.delete !== "true" && b.dataset.delete === "true") return 1
+                    //             if (a.dataset.archive === "true" && b.dataset.archive !== "true") return -1
+                    //             if (a.dataset.archive !== "true" && b.dataset.archive === "true") return 1
+                    //             return 0
+                    //         })
+                    //     }
+
+                    //     renderPosts(groupedPosts)
+                    // }
+
+                    const orderPost = () => {
+                        const order_by = orderby.value
+                        let orderedPosts = []
+
+                        if (order_by === "asc") {
+                            orderedPosts = [...replies].sort((a, b) => new Date(a.dataset.date) - new Date(b.dataset.date))
+                        } else if (order_by === "desc") {
+                            orderedPosts = [...replies].sort((a, b) => new Date(b.dataset.date) - new Date(a.dataset.date))
+                        }
+
+                        renderPosts(orderedPosts)
+                    }
+
+                    filterPost()
+                    // groupPost()
+                    orderPost()
+                })
+            </script>

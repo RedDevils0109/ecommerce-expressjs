@@ -1,0 +1,117 @@
+<!-- CSS -->
+<link rel="stylesheet" href="/stylesheets/comment.css">
+
+<!-- Review in posts -->
+<div class="container my-3 d-flex justify-content-center">
+    <div id="commentSection">
+        <h2 class="my-2">Comment section</h2>
+        <% if (typeof userId==='undefined' || userId===null) { %>
+            <p>Please login to submit a review.</p>
+            <% } else { %>
+                <div class="d-flex align-items-center mb-3">
+
+                    <img src="<%= profileImg  %>" alt="profile" width="40" height="40" class="rounded-circle">
+                    <span class="mx-2 font-weight-bold">
+                        <%= name %>
+                    </span>
+                </div>
+
+                <form action="/products/<%= product._id %>/reviews" method="POST">
+                    <div class="rating">
+                        <div>Ratings:</div>
+                        <input type="radio" id="star5" name="rating" value="5" />
+                        <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                        <input type="radio" id="star4" name="rating" value="4" />
+                        <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                        <input type="radio" id="star3" name="rating" value="3" />
+                        <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                        <input type="radio" id="star2" name="rating" value="2" />
+                        <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                        <input type="radio" id="star1" name="rating" value="1" />
+                        <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+                    </div>
+
+                    <div class="clearFloat"></div>
+
+                    <div class="row">
+                        <!-- Add comment -->
+                        <div class="col-md-8">
+                            <textarea type="text" placeholder="Enter your comments here" class="inputComment"
+                                id="inputComment" name="body"></textarea>
+                        </div>
+                        <div class="col-md-4" id="send">
+                            <button class="btn" type="submit" id="submitBtn">Send
+                                <i class="fa fa-send-o" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <% } %>
+                    <!-- Display comments -->
+                    <div class="displayComments">
+                        <% comments.forEach((comment)=> { %>
+                            <div class="eachComment">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <img src="<%= comment.profileImg %>" alt="profile" width="40" height="40"
+                                            class="rounded-circle">
+                                        <span class="mx-2 font-weight-bold">
+                                            <%= comment.authorName %>
+                                        </span>
+                                    </div>
+                                    <div class="date">
+                                        <%= comment.createdAt.toLocaleString(undefined, { dateStyle: 'medium' ,
+                                            timeStyle: 'short' , hour12: false }) %>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="ratings">
+                                        <% for (let i=0; i < comment.rating; i++) { %>
+                                            <i class="fa fa-star" style="color: #fbc634;"></i>
+                                            <% } %>
+                                                <% for (let i=0; i < 5 - comment.rating; i++) { %>
+                                                    <i class="fa fa-star"></i>
+                                                    <% } %>
+                                    </div>
+                                </div>
+                                <% if (comment.body !=='' ) { %>
+                                    <div class="comment">
+                                        <%= comment.body %>
+                                    </div>
+                                    <% } %>
+                            </div>
+                            <% }) %>
+                    </div>
+    </div>
+</div>
+
+<!-- JS -->
+<script>
+    const ratingInputs = document.querySelectorAll('input[name="rating"]');
+    const commentInput = document.getElementById('inputComment');
+    const submitButton = document.getElementById('submitBtn');
+
+    // Function to check if at least one of the conditions is met
+    function validateForm() {
+        const isRatingSelected = Array.from(ratingInputs).some(input => input.checked);
+        const isCommentFilled = commentInput.value.trim() !== '';
+
+        if (isRatingSelected || isCommentFilled) {
+            submitButton.style.display = "block";
+            // Enable the submit button
+        } else {
+            submitButton.style.display = "none"; // Disable the submit button
+        }
+    }
+
+    // Attach event listeners to rating inputs and comment input
+    ratingInputs.forEach(input => {
+        input.addEventListener('change', validateForm);
+    });
+
+    commentInput.addEventListener('input', validateForm);
+
+    // Initial validation check
+    validateForm();
+</script>
+<script src="/js/comment.js"></script>

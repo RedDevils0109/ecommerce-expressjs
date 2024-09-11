@@ -1,0 +1,38 @@
+<%- include('../main/header.ejs') %>
+    <%- include('../main/navbar.ejs') %>
+        <h1>Home</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th style="max-width: 20%;">Product</th>
+                    <th style="max-width: 20%;">Quantity</th>
+                    <th>Price</th>
+                    <th>Sold</th>
+                </tr>
+
+
+            </thead>
+            <tbody>
+                <% products.forEach(function(e) { %>
+                    <tr>
+                        <td style="max-width: 20%; overflow: hidden; text-overflow: ellipsis;">
+                            <%= e.name %>
+                        </td>
+                        <td style="max-width: 20%; overflow: hidden; text-overflow: ellipsis;">
+                            <%= e.quantity %>
+                        </td>
+                        <td>
+                            <%= e.price %>
+                        </td>
+                        <td>
+                            <%= e.sell %>
+                        </td>
+            
+                    </tr>
+                    <% }); %>
+            </tbody>
+
+
+
+        </table>
+<%- include('../main/footer.ejs') %>

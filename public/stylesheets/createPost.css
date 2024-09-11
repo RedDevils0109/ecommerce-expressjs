@@ -1,0 +1,256 @@
+#postTitle h1 {
+    font-weight: bold;
+    text-align: center;
+    margin: 30px;
+}
+
+#addComment .btn {
+    border-radius: 10px;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+}
+
+#addComment .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, lightgray 50%, #ffc107 50%);
+    background-size: 200% 100%;
+    transition: background-position 0.3s;
+    z-index: -1;
+}
+
+#addComment .btn:hover::before {
+    background-position: -100% 0;
+}
+
+#display_image {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    background-position: center;
+    background-size: contain;
+
+}
+
+.wrapper {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+}
+
+.title {
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid gray;
+    margin-top: 50px;
+}
+
+h3 {
+    margin: 0;
+}
+
+p {
+    font-weight: 100;
+}
+
+.inputTitle {
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid black !important;
+    width: 100%;
+    height: 30px;
+    padding: 10px !important;
+}
+
+.button {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nextBtn {
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 100px;
+    padding: 10px;
+    background-color: #edd714;
+}
+
+.nextBtn:hover {
+    cursor: pointer;
+}
+
+.content {
+    box-sizing: border-box;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+label[for="img"] {
+    display: block;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid black;
+    width: 100px;
+    background-color: #edd714;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.inputContent {
+    box-sizing: border-box;
+    border: 1px solid black !important;
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px !important;
+    min-height: 250px !important;
+    resize: vertical;
+    margin-top: 15px;
+}
+
+.submitBtnDiv {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+
+
+.submitBtn {
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 100px;
+    padding: 10px;
+    background-color: #edd714;
+}
+
+.hide {
+    display: none;
+}
+
+.blur {
+    filter: blur(1.2px);
+}
+
+textarea:disabled:hover {
+    cursor: not-allowed;
+}
+
+label[for="img"]:hover,
+textarea:hover {
+    cursor: pointer;
+}
+
+.disabledCursor:hover {
+    cursor: not-allowed !important;
+}
+
+.modal {
+    z-index: 10001;
+}
+
+
+/* Forum search and filter */
+.dark-mode .forumInputSearch::placeholder,
+.dark-mode .forumInputSearch,
+.dark-mode .btnSearch {
+    color: white;
+}
+
+.forumFilter {
+    display: flex;
+    justify-content: space-between;
+}
+
+.forumSearchBox {
+    position: relative;
+}
+
+.forumInputSearch {
+    height: 50px;
+    width: 50px;
+    border-style: none;
+    padding: 10px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    outline: none;
+    border-radius: 25px;
+    transition: all .5s ease-in-out;
+    background-color: #ffc107;
+    padding-right: 40px;
+    color: black;
+}
+
+.forumInputSearch::placeholder {
+    color: rgba(0, 0, 0, .5);
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-weight: 100;
+}
+
+.btnSearch {
+
+    border-style: none;
+    font-size: 20px;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    right: 9px;
+    top: 7px;
+    color: black;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.btnSearch:focus~.forumInputSearch {
+    width: 100%;
+    border-radius: 0px;
+    background-color: transparent;
+    border-bottom: 1px solid #edd714;
+    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+
+.forumInputSearch:focus {
+    width: 100%;
+    border-radius: 0px;
+    background-color: transparent;
+    border-bottom: 1px solid #edd714;
+    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+
+
+.sortDay {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 600px) {
+    .forumFilter {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .sortDay {
+        width: 50%;
+        margin-top: 20px;
+    }
+}

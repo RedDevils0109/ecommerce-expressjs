@@ -1,0 +1,140 @@
+/* Card group */
+.cardgroup {
+    margin: auto;
+    margin: 1rem;
+}
+
+.cardgroup a {
+    pointer-events: none;
+}
+
+.cardgroup:hover a {
+    pointer-events: auto;
+}
+
+/* Card */
+.card {
+    margin: 0 auto;
+    text-align: center;
+    width: 16rem;
+    height: 26rem;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+.dark-mode .card {
+    background-color: #28282B;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.3);
+}
+
+.card h5,
+.card p {
+    padding: 20px;
+}
+
+.card a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: black;
+}
+
+.card h5 {
+    height: 3rem;
+    margin: none;
+}
+
+.dark-mode .card h5 {
+    color: white;
+}
+
+.card:hover {
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.6);
+}
+
+.dark-mode .card:hover, .dark-mode .card:focus {
+    background-color: z#28282b;
+    box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.8);
+}
+
+#carousel {
+    display: block;
+}
+
+.card img,
+#carouselImg {
+    padding-top: 20px;
+    display: block;
+    height: 200px;
+    width: auto;
+    text-align: center;
+    margin: auto;
+}
+
+.dark-mode .card img,
+#carouselImg {
+    background-color: transparent;
+}
+
+/* Card body */
+.card-body {
+    text-align: left;
+    width: 100%;
+}
+
+.card-body p {
+    font-size: small;
+    color: gray;
+    float: left;
+}
+
+.card-body button {
+    float: right;
+    border: none;
+    background-color: rgb(0, 113, 227);
+    color: white;
+    width: 60px;
+    height: 40px;
+    border-radius: 40px;
+}
+
+.card-body button:hover {
+    background-color: rgb(1, 124, 247);
+    color: whitesmoke;
+}
+
+/* Carousel */
+.carousel-control-prev,
+.carousel-control-next {
+    display: none;
+    height: 45px;
+    width: 45px;
+    text-align: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: gray;
+    top: 80px;
+    color: rgb(18, 18, 18);
+}
+
+.card:hover .carousel-control-prev,
+.card:hover .carousel-control-next {
+    display: block;
+    color: black;
+    background-color: lightgray;
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    .card {
+        width: 14rem;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1400px) {
+    .card {
+        width: 15rem;
+    }
+}

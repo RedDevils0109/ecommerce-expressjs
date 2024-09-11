@@ -1,0 +1,241 @@
+/* Top bar */
+#topBar {
+    background-color: white !important;
+    height: 50px;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+}
+
+#topBarLink {
+    height: 100px;
+    color: rgb(78, 78, 78) !important;
+    text-decoration: none !important;
+}
+
+#topBarLink:hover {
+    color: black !important;
+}
+
+/* Top bar dark mode */
+.dark-mode #topBar {
+    background-color: #343434 !important;
+    color: white !important;
+}
+
+.dark-mode #topBarLink {
+    color: white !important;
+}
+
+.dark-mode #topBarLink:hover {
+    color: #ffc107 !important;
+}
+
+/* Navigation bar */
+#navbar {
+    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.2);
+    z-index: 10002;
+}
+
+#navbar a {
+    color: rgb(78, 78, 78) !important;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#navbar a:hover {
+    color: black !important;
+}
+
+/* Navigation bar dark mode */
+.dark-mode #navbar {
+    background-color: #28282B !important;
+}
+
+.dark-mode #navbar a {
+    color: white !important;
+    font-size: 16px;
+    font-weight: 700
+}
+
+.dark-mode #navbar a:hover {
+    color: #ffc107 !important;
+}
+
+/* Search input */
+.input-group {
+    width: 100%;
+}
+
+.form-control {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.dark-mode select {
+    background-color: #212529 !important;
+    color: white !important;
+}
+
+.dark-mode #themeSelect {
+    background-color: #343434 !important;
+}
+
+#themeSelect:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Dropdown menu of product */
+#navbar {
+    z-index: 1000;
+}
+#dropdown-menu {
+    position: absolute;
+    left: auto;
+    right: 0;
+    z-index: 100;
+    width: 100px;
+}
+
+#dropdown-menu i {
+    text-align: center;
+    width: 20px;
+    color: black;
+}
+
+.dropdown-menu {
+    background-color: #f8f9fa;
+}
+
+.dropdown-item {
+    color: #7a7a7a;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #000;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+/* Dropdown menu of product dark mode */
+.dark-mode #dropdown-menu {
+    background-color: #28282B;
+}
+
+.dark-mode #dropdown-menu li:hover,
+.dark-mode #dropdown-menu a:hover {
+    background-color: #28282B !important;
+}
+
+.dark-mode #dropdown-menu i {
+    text-align: center;
+    width: 20px;
+    color: white;
+}
+
+#dropdown-menu li:hover {
+    color: black;
+    text-decoration: none;
+}
+
+/* Breadcrumb */
+#breadcrumb {
+    width: 100%;
+    padding: 5px;
+    padding-left: 30px;
+    top: 80px;
+    z-index: 99;
+    font-size: 16px;
+}
+
+#breadcrumb a {
+    text-decoration: none;
+    color: black;
+    transition: ease 0.3s;
+}
+
+#breadcrumb a:hover {
+    text-decoration: none;
+    color: blue;
+}
+
+.dark-mode .breadcrumb-item::before {
+    color: white;
+}
+
+/* Breadcrumb dark mode */
+.dark-mode #breadcrumb {
+    background-color: #343434 !important;
+    color: white !important;
+}
+
+.dark-mode #breadcrumb a {
+    text-decoration: none;
+    color: white;
+}
+
+.dark-mode #breadcrumb a:hover {
+    text-decoration: none;
+    color: #ffc107;
+}
+
+#lblCartCount {
+    font-size: 12px;
+    background: #ff0000;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -10px;
+}
+
+.badge {
+    padding-left: 9px;
+    padding-right: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+    background-color: #c67605;
+}
+
+/* Additional effect */
+@media screen and (max-width:992px) {
+    .centerOnMobile {
+        text-align: center
+    }
+
+    #dropdown-menu {
+        position: absolute;
+        left: 0;
+        right: auto;
+        z-index: 100;
+        width: 100px;
+    }
+
+    .breadcrumb {
+        text-align: center;
+    }
+
+    #search {
+        width: 80% !important;
+    }
+}
+
+
+.red-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 50%;
+    margin-left: 5px;
+}

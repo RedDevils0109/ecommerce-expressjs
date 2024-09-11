@@ -1,0 +1,62 @@
+#display_image {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    background-position: center;
+    background-size: contain;
+    border-radius: 50%;
+}
+
+#wrap {
+    width: 200px;
+    text-align: center;
+}
+
+#customButton {
+    border: none;
+    width: 120px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+#changePass {
+    color: blue;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#changePass:hover {
+    text-decoration: underline;
+}
+
+#confirmChange .btn {
+    border-radius: 10px;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+}
+
+#confirmChange .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, lightgray 50%, #ffc107 50%);
+    background-size: 200% 100%;
+    transition: background-position 0.3s;
+    z-index: -1;
+}
+
+#confirmChange .btn:hover::before {
+    background-position: -100% 0;
+}
+
+.dark-mode label, .dark-mode #changePassTitle {
+    color: white;
+}
+
+.dark-mode #changePass {
+    color: #ffc107;
+}

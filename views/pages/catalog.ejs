@@ -1,0 +1,96 @@
+<%- include('../main/header') %>
+    <%- include('../main/navbar') %>
+        <!-- CSS -->
+        <link rel="stylesheet" href="/stylesheets/navBrand.css">
+
+        <% if (title==='Products' ) { %>
+            <!-- Brands filter -->
+            <div class="container py-2" id="navBrand">
+                <div class="row justify-content-center align-items-center">
+                    <% categories.forEach((category)=> { %>
+                        <div class="col-md-3 col-6" style="text-align: center;">
+                            <div class="d-flex justify-content-center align-items-center"
+                                style="padding: 0; width: 160px; height: 40px; margin: auto;">
+                                <a href="/catalog/<%= category %>/" class="btn" id="brand-link">
+                                    <style>
+                                        #brand-name {
+                                            width: 160px;
+                                            height: 40px;
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            color: black;
+                                        }
+
+                                        .dark-mode #brand-name {
+                                            color: white;
+                                        }
+                                    </style>
+                                    <h5 id="brand-name">
+                                        <% if (category==='mobile' ) { %>
+                                            <!-- <i class="fa fa-mobile" aria-hidden="true"> </i> -->
+                                            <%= category.toUpperCase() %>
+                                                <% } if (category==='laptop' ) { %>
+                                                    <!-- <i class="fa fa-laptop" aria-hidden="true"> </i> -->
+                                                    <%= category.toUpperCase() %>
+                                                        <% } if (category==='headphone' ) { %>
+                                                            <!-- <i class="fa fa-headphones" aria-hidden="true"> </i> -->
+                                                            <%= category.toUpperCase() %>
+                                                                <% } %>
+                                    </h5>
+                                </a>
+                            </div>
+                        </div>
+                        <% }) %>
+                </div>
+            </div>
+
+            <!-- Catalog -->
+            <div id="catalogItem">
+                <div class="container">
+                    <div class="row justify-content-center align-items-center g-2">
+                        <% product.forEach((product, index)=> { %>
+                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                <%- include('../main/card.ejs', { card: product }) %>
+                            </div>
+                            <% if ((index + 1) % 4===0 && index < product.length - 1) { %>
+                    </div>
+                    <div class="row justify-content-center align-items-center g-2">
+                        <% } %>
+                            <% }) %>
+                                <% for(let i=product.length % 4; i < 4 && i> 0; i++) { %>
+                                    <div class="col-lg-3 col-md-6 col-sm-12"></div>
+                                    <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <%} else { %>
+                <%- include('../main/navBrand', {category, brands}) %>
+                    <% if (products.length===0) { %>
+                        <div class="container">
+                            <h1 class="text-center" style="height: 500px; padding: 20px;">No products found</h1>
+                        </div>
+                        <% } else { %>
+                            <!-- Catalog -->
+                            <div id="catalogItem">
+                                <div class="container">
+                                    <div class="row justify-content-center align-items-center g-2">
+                                        <% products.forEach((product, index)=> { %>
+                                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                                <%- include('../main/card.ejs', { card: product }) %>
+                                            </div>
+                                            <% if ((index + 1) % 4===0 && index < products.length - 1) { %>
+                                    </div>
+                                    <div class="row justify-content-center align-items-center g-2">
+                                        <% } %>
+                                            <% }) %>
+                                                <% for(let i=products.length % 4; i < 4 && i> 0; i++) { %>
+                                                    <div class="col-lg-3 col-md-6 col-sm-12"></div>
+                                                    <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                            <%}%>
+                                <%}%>
+                                    <%- include('../main/footer') %>

@@ -1,0 +1,32 @@
+<!-- CSS -->
+<link rel="stylesheet" href="/stylesheets/card.css">
+
+<!-- Card -->
+<div class="cardgroup">
+    <div class="card"> <a href="/products/<%= card._id %>" style="text-decoration: none; color: black;">
+            <div id="cardImg">
+                <img src="<%= card.mainImg %>" alt="Card thumbnail">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    <%= card.name %>
+                </h5>
+            </div>
+            <div class="card-body">
+                <p>
+                    <% if (card.quantity> 0) { %>
+                        From
+                        <b style="color: red;">$<%= parseFloat(card.price).toFixed(2) %></b>
+                        <% } else {%>
+                            <b style="color: red;">Out of stock</b>
+                            <% } %>
+                                <br>
+                                (<%= card.reviewIds.length %> reviews)
+                </p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- JS -->
+<!-- <script src="/js/card.js"></script> -->

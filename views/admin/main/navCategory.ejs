@@ -1,0 +1,23 @@
+<div class="text-center py-3" id="category-nav">
+    <a href="/admin/new/mobile" class="btn btn-primary">Mobile</a>
+    <a href="/admin/new/laptop" class="btn btn-primary">Laptop</a>
+    <a href="/admin/new/headphone" class="btn btn-primary">Headphone</a>
+</div>
+
+<!-- JS -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const categories = document.querySelectorAll('#category-nav a');
+        const curPath = window.location.pathname;
+
+        categories.forEach((e) => {
+            e.classList.remove('active');
+        });
+
+        categories.forEach((e) => {
+            if (e.getAttribute('href') === curPath) {
+                e.classList.add('active');
+            }
+        });
+    });
+</script>

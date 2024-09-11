@@ -1,0 +1,256 @@
+.aboutPage {
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1cm;
+}
+
+.aboutPage h1 {
+    font-size: 36px;
+}
+
+.aboutPage h2 {
+    font-size: 30px;
+}
+
+
+.about, .product, .corePillars, .members {
+    text-align: center;
+}
+
+/*about section*/
+.about {
+    box-sizing: border-box;
+    padding: 15px;
+    background-color: #ffc107;
+    margin-bottom: 100px;
+}
+
+.aboutDescription {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+    width: 50%;
+    line-height: 1cm;
+}
+
+/* product section */
+.product {
+    margin-bottom: 100px;
+}
+
+.product p {
+    margin: 0;
+}
+
+.wrapperProduct {
+    display: grid;
+    grid-template-columns: 30% 30%;
+    justify-content: center;
+    gap: 70px 30px;
+}
+
+.wrapperProduct p {
+    box-sizing: border-box;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px 1px rgba(0,0,0,.25)
+}
+
+.overview {
+    grid-column: span 2;
+}
+
+
+/* core pillars */
+.corePillars {
+    box-sizing: border-box;
+    padding: 15px;
+    background-color: #ffc107;
+    margin-bottom: 100px;
+}
+
+.corePillars h1 {
+    margin-bottom: 100px;
+}
+
+.honesty {
+    display: flex;
+    justify-content: center;
+    gap:100px;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.honestyParagraph {
+    width: 25%;
+    text-align: justify;
+}
+
+.honesty h2 {
+    text-align: right;
+}
+
+.honesty img {
+    width: 400px;
+    border-radius: 15px;
+}
+
+.userEx{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:100px;
+}
+
+.userExParagraph {
+    width:25%;
+    text-align: justify;
+}
+
+.userEx img {
+    width: 400px;
+    border-radius: 15px;
+}
+
+
+/* member section  */
+.wrapperMember {
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.members h1 {
+    margin-bottom: 100px;
+}
+
+.eachMember {
+    box-sizing: border-box;
+    padding:10px;
+    width: 15%;
+    box-shadow: 0 2px 4px 1px rgba(0,0,0,.25);
+    border-radius: 15px;
+}
+
+
+.eachMember img {
+    width: 60%;
+    border-radius: 50%;
+}
+
+.dark-mode .product, .dark-mode .members {
+    color: white;
+}
+
+.dark-mode .overview, .dark-mode .makeDark, .dark-mode .eachMember {
+    background-color: #28282b;
+}
+
+
+
+@media only screen and (max-width: 992px) {
+.aboutDescription {
+    width: 70%;
+}
+
+    .wrapperProduct {
+        grid-template-columns: 70%;
+    }
+
+    .overview {
+        grid-column: span 1;
+    }
+
+
+    .honesty {
+        flex-direction: column;
+    }
+
+    .honestyParagraph {
+        width: 50%;
+        text-align: center;
+    }
+
+    .honestyParagraph h2 {
+        text-align: center;
+    }
+
+    .honesty img {
+        width: 350px;
+    }
+
+    .userEx {
+        flex-direction: column;
+    }
+
+    .userEx img {
+        order: 0;
+        width: 350px;
+    }
+
+    .userExParagraph {
+        order: 1;
+        width: 50%;
+        text-align: center;
+    }
+
+    .wrapperMember  {
+        flex-wrap: wrap;
+        align-content: space-between;
+        row-gap: 50px;
+    }
+
+    .eachMember {
+        width:40%;
+    }
+}
+
+
+@media only screen and (max-width: 600px) {
+    .aboutDescription {
+        width: 100%;
+    }
+    
+    .honesty {
+        flex-direction: column;
+    }
+
+    .honestyParagraph {
+        width: 100%;
+        text-align: center;
+    }
+
+    .honestyParagraph h2 {
+        text-align: center;
+    }
+
+    .honesty img {
+        width: 55%;
+    }
+
+    .userEx {
+        flex-direction: column;
+    }
+
+    .userEx img {
+        order: 0;
+        width: 55%;
+    }
+
+    .userExParagraph {
+        order: 1;
+        width: 100%;
+        text-align: center;
+    }
+
+    .wrapperMember {
+        flex-wrap: nowrap;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .eachMember {
+        width: 60%;
+    }
+}

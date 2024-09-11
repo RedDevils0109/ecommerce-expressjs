@@ -1,0 +1,101 @@
+<%- include('../main/header.ejs') %>
+    <%- include('../main/navbar.ejs') %>
+        <link rel="stylesheet" href="/stylesheets/admin.css">
+        <form class="forumFilter" action="/admin/users/search" method="get">
+            <div class="forumSearchBox">
+                <button class="btnSearch"><i class="fas fa-search"></i></button>
+                <input type="text" class="forumInputSearch" placeholder="Search by email" name="q">
+            </div>
+        </form>
+        <!-- Users page -->
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th style="max-width: 20%;">Email</th>
+                    <th style="max-width: 20%;">Username</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Lock</th>
+
+                </tr>
+
+
+            </thead>
+            <tbody>
+                <% users.forEach(function(e) { %>
+                    <tr>
+                        <td style="max-width: 20%; overflow: hidden; text-overflow: ellipsis;">
+                            <%= e.email %>
+                        </td>
+                        <td style="max-width: 20%; overflow: hidden; text-overflow: ellipsis;">
+                            <%= e.username %>
+                        </td>
+                        <td>
+                            <%= e.name %>
+                        </td>
+                        <td>
+                            <form action="/admin/users/role/<%= e._id%>" method="post">
+                                <select id="role" class="form-select" name="role">
+                                    <option value="user" <%=e.role==='user' ? 'selected' : "" %>> user</option>
+                                    <option value="admin" <%=e.role==='admin' ? 'selected' : "" %>>admin</option>
+                                </select>
+                            </form>
+                        </td>
+                        <td>
+                            <% if (e.active) { %>
+                                <p style="color: green;">Active</p>
+                                <% } else { %>
+                                    <p style="color: red;">Not Active</p>
+                                    <% } %>
+                        </td>
+                        <td>
+                            <form action="/admin/users/lock/<%= e._id %>" method="post">
+                                <% if (e.lock) { %>
+                                    <button class="btn btn-danger">Lock</button>
+                                    <% } else { %>
+                                        <button class="btn btn-success">UnLock</button>
+                                        <% } %>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+
+
+
+        </table>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const selectElements = document.querySelectorAll('.form-select');
+
+                selectElements.forEach(selectElement => {
+                    selectElement.addEventListener('change', () => {
+                        const selectedRole = selectElement.value;
+                        console.log(selectedRole)
+                        const form = selectElement.closest('form');
+                        // const formData = new FormData(form);
+
+                        fetch(form.getAttribute('action'), {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ role: selectedRole }),
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    window.location.href = '/admin/users'; // Redirect to /admin/users
+                                } else {
+                                    throw new Error('Failed to update role');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    });
+                });
+            });
+        </script>
+
+        <%- include('../main/footer.ejs') %>

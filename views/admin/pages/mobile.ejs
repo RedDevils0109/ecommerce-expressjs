@@ -1,0 +1,95 @@
+<%- include('../main/header.ejs') %>
+    <%- include('../main/navbar.ejs') %>
+        <%- include('../main/navCategory.ejs') %>
+            <!-- Add Mobiles page -->
+            <section class="container my-2 bg-white w-50 text-dark p-2">
+                <form class="row g-3 p-3" id="myForm">
+                    <div class="col-md-8">
+                        <label for="name" class="form-label">Product name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" name="price" step="0.001" min="0" required>
+                    </div>
+
+                    <input type="hidden" name="category" value="<%= category %>">
+
+                    <div class="col-md-3">
+                        <label for="brand" class="form-label">Brand</label>
+                        <select id="brand" class="form-select" name="brand">
+                            <% brands.forEach(e=> { %>
+                                <option value="<%= e %>">
+                                    <%= e %>
+                                </option>
+                                <% }); %>
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="ram" class="form-label">RAM</label>
+                        <select id="ram" class="form-select" name="ram">
+                            <% ram.forEach(e=> { %>
+                                <option value="<%= e %>">
+                                    <%= e %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="storage" class="form-label">Storage</label>
+                        <select id="storage" class="form-select" name="storage">
+                            <% storage.forEach(e=> { %>
+                                <option value="<%= e %>">
+                                    <%= e %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="quantity" class="form-label">Quanity</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" step="1" min="0"
+                            required>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="mainImg" class="form-label">Main Img</label>
+                        <input type="text" class="form-control" id="mainImg" name="mainImg"
+                            placeholder="ex : https://cdn.hoanghamobile.com.ip-11.jpg" required>
+                    </div>
+
+                    <div class="col-md-10">
+                        <label for="subImg" class="form-label">Sub image</label>
+                        <input type="text" id="subImg" class="form-control" placeholder="Enter text">
+                    </div>
+
+                    <div class="col-md-2 align-self-end"> <!-- align the button at the bottom -->
+                        <button type="button" class="btn btn-primary" id="addImg">Add</button>
+                    </div>
+
+                    <ul id="subList"></ul>
+
+                    <div class="col-md-12">
+                        <label for="videoUrl" class="form-label">Video</label>
+                        <input type="text" class="form-control" id="videoUrl" name="videoUrl">
+                    </div>
+
+                    <div class="col-md-12">
+                        <textarea class="form-control" rows="6" placeholder="Description" name="description"
+                            required></textarea>
+                    </div>
+
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- JS -->
+            <script src="/js/admin/addProduct.js"></script>
+
+            <%- include('../main/footer.ejs') %>

@@ -1,0 +1,25 @@
+<%- include('../main/header') %>
+    <%- include('../main/navbar') %>
+        <style>
+            .dark-mode h3 {
+                color: white
+            }
+        </style>
+
+        <!-- Search page -->
+        <h3 style="text-align: center; margin: 20px;">Results for '<strong>
+                <%= title %>
+            </strong>'</h3>
+        <div id="catalogItem">
+            <div class="container">
+                <div class="row justify-content-start align-items-center g-2">
+                    <% products.forEach((product)=> { %>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <%- include('../main/card.ejs', { card: product }) %>
+                        </div>
+                        <% }) %>
+                </div>
+            </div>
+        </div>
+
+        <%- include('../main/footer') %>

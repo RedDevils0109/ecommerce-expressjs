@@ -1,0 +1,117 @@
+html,
+body {
+    height: 100%;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+/* Navigation links */
+.mynav {
+    color: black;
+}
+
+.mynav li a {
+    color: black;
+    text-decoration: none;
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+    padding: 8px 5px;
+}
+
+#sidebar a {
+    text-decoration: none;
+}
+
+.logout {
+    text-decoration: none;
+}
+
+.mynav li a.active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.mynav li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.mynav li a i {
+    width: 25px;
+    text-align: center;
+}
+
+#bdSidebar {
+    background-color: #ffc107 !important;
+    color: black !important;
+}
+
+#subnav {
+    background-color: #ffc107;
+    color: black
+}
+
+.btn.active {
+    background-color: #ffc107;
+}
+
+.forumFilter {
+    display: flex;
+    justify-content: space-between;
+}
+
+.forumSearchBox {
+    position: relative;
+}
+
+.forumInputSearch {
+    height: 50px;
+    width: 50px;
+    border-style: none;
+    padding: 10px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    outline: none;
+    border-radius: 25px;
+    transition: all .5s ease-in-out;
+    background-color: #ffc107;
+    padding-right: 40px;
+    color: black;
+}
+
+.forumInputSearch::placeholder {
+    color: rgba(0, 0, 0, .5);
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-weight: 100;
+}
+
+.btnSearch {
+
+    border-style: none;
+    font-size: 20px;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    right: 9px;
+    top: 7px;
+    color: black;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.btnSearch:focus~.forumInputSearch {
+    width: 100%;
+    border-radius: 0px;
+    background-color: transparent;
+    border-bottom: 1px solid #edd714;
+    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+
+.forumInputSearch:focus {
+    width: 100%;
+    border-radius: 0px;
+    background-color: transparent;
+    border-bottom: 1px solid #edd714;
+    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}

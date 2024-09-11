@@ -1,0 +1,64 @@
+<%- include('../main/header.ejs') %>
+    <%- include('../main/navbar.ejs') %>
+        <% feedbacks.forEach((f)=> { %>
+            <div class="row">
+                <!-- Users info -->
+                <div class="col-6">
+                    <div class='card mb-3' style="overflow: auto; max-height: 300px;">
+                        <div class="card-body">
+                            <p class="card-title d-flex justify-content-between">
+                                <span>
+                                    <b>FullName: </b>
+                                    <%= f.name %>
+                                </span>
+                                <span><i>
+                                        <%= f.createdAt.toLocaleString(undefined, { dateStyle: 'medium' ,
+                                            timeStyle: 'short' , hour12: false }) %>
+                                    </i></span>
+                            </p>
+                            <hr>
+
+                            <div class="card-text">
+                                <p>
+                                    <b>Email: </b>
+                                    <%= f.email %>
+                                </p>
+                                <p>
+                                    <b>Phone: </b>
+                                    <%= f.phone %>
+                                </p>
+                                <p>
+                                    <b>Feedback type: </b>
+                                    <%= f.feedback %>
+                                </p>
+                                <p>
+                                    <b>Description: </b>
+                                    <br>
+                                <p></p>
+                                <%= f.description %>
+                                    </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <form action="/admin/feedback/check/<%=f._id%>">
+                        <% if (!f.check) { %>
+                            <button type="submit" class="btn btn-danger">Unchecked</button>
+                            <% } else { %>
+                                <button type="submit" class="btn btn-success">Checked</button>
+                                <% } %>
+
+                    </form>
+                </div>
+
+                <!-- Lock/Unlock users -->
+
+            </div>
+            <% }); %>
+
+
+
+
+
+                <%- include('../main/footer.ejs') %>

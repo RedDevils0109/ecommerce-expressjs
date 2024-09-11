@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="/stylesheets/postcard.css">
+
+<!-- Post -->
+<div class="post-container">
+    <a href="/order/<%= item._id %>" class="post-link">
+        <div class="post">
+            <!--Order main content-->
+            <div class="post-header">
+                <h2 class="titleOrderID" style="overflow-wrap: break-word;">Order ID: <%= item._id %>
+                </h2>
+                <h5>Status:
+                    <b
+                        style="color: <%= item.status === 'Cancel' ? 'red' : item.status === 'Delivering' ? 'gold' : 'green' %>;">
+                        <%= item.status %>
+                    </b>
+
+                </h5>
+                <h5>Products Ordered:</h5>
+                <% item.products.forEach( product=> { %>
+                    <div class="productDetail">
+                        <%= product.quantity %>x
+                            <%= product.productId.name %>
+                    </div>
+                    <% }) %>
+            </div>
+
+            <!--Order total and date-->
+            <div class="totalAndDate">
+                <div class="post-content">
+                    <p class="post-content" id="productDescription" style="overflow: hidden;">Total Price: $<%=
+                            item.total %>
+                    </p>
+                </div>
+                <div class="order-date">
+                    <h5>Order placed: <%= new Date(item.createdAt).toLocaleString() %>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>

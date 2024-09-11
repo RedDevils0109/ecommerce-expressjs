@@ -1,0 +1,77 @@
+<%- include('../main/header') %>
+    <%- include('../main/navbar') %>
+        <link rel="stylesheet" href="/stylesheets/createPost.css">
+
+        <!--CSS-->
+        <style>
+            .dark-mode #postTitle {
+                color: white;
+            }   
+        </style>
+
+        <div id="postTitle">
+            <h1>B1nance's Order</h1>
+        </div>
+
+        <!-- Post cards -->
+        <div id="postList">
+            <div class="container">
+                <div class="row justify-content-start align-items-center g-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6" id="addComment">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                    </div>
+                    <select id="sortSelect" class="form-select">
+                        <option value="desc">Sort Descending</option>
+                        <option value="asc" selected >Sort Ascending</option>
+                    </select>
+                    
+                    <div id="postContainer">
+                        <% orders.forEach((order) => { %>
+                        <div class="col-lg-12 col-md-12 col-sm-12" id="<%= new Date(order.createdAt).toLocaleString() %>">
+                            <%- include('./components/card.ejs', { item: order}) %>
+                        </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+            const postsContainer = document.getElementById('postContainer')
+            const sortSelect = document.getElementById('sortSelect')
+
+
+            const sortByCreatedAt = (order) => {
+                const posts = Array.from(postsContainer.children)
+
+                posts.sort((a, b) => {
+                    const createdAtA = Date.parse(a.id)
+                    const createdAtB = Date.parse(b.id)
+
+                    if (order === 'asc') {
+                        return createdAtA - createdAtB
+                    } else {
+                        return createdAtB - createdAtA
+                    }
+                })
+
+                while (postsContainer.firstChild) {
+                    postsContainer.removeChild(postsContainer.firstChild)
+                }
+
+                posts.forEach((post) => {
+                    postsContainer.appendChild(post)
+                })
+            }
+
+            sortSelect.addEventListener('change', (event) => {
+                const selectedOrder = event.target.value
+                sortByCreatedAt(selectedOrder)
+                })
+            })
+
+        </script>
+
+        <%- include('../main/footer') %>

@@ -1,0 +1,304 @@
+<%- include('../main/header.ejs') %>
+    <%- include('../main/navbar.ejs') %>
+        <link rel="stylesheet" href="/stylesheets/post.css">
+        <div class="container">
+
+            <div class="bg-white p-4 rounded shadow mt-3" id="postDetails">
+                <div class="d-flex justify-content-between">
+                    <!-- avatar -->
+                    <div class="d-flex">
+                        <img src="<%= post.authorId.profileImg %>" alt="avatar" class="rounded-circle me-2"
+                            style="width: 38px; height: 38px; object-fit: cover" />
+                        <div>
+                            <p class="m-0 fw-bold">
+                                <%= post.authorId.username %>
+                            </p>
+                            <span class="text-muted fs-7">
+                                <%=new Date(post.createdAt).toLocaleString()%>
+                                    - category <%= post.category %>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- edit -->
+                    <i class="fas fa-ellipsis-h" type="button" id="post1Menu" data-bs-toggle="dropdown"
+                        aria-expanded="false"></i>
+                    <!-- edit menu -->
+                    <ul class="dropdown-menu border-0 shadow" aria-labelledby="post1Menu">
+
+                        <% if (typeof userId=="undefined" || userId==null) { %>
+                            <% } else {%>
+                                <% if (post.authorId._id.toString()==userId ) { %>
+                                    <li class="d-flex align-items-center">
+                                        <button class="
+                                                    dropdown-item
+                                                    d-flex
+                                                    justify-content-around
+                                                    align-items-center
+                                                    fs-7
+                                                    submit-btn
+                                                    " onclick="showEditPostModal()">
+                                            Edit Post</a>
+                                    </li>
+
+
+                                    <li class="d-flex align-items-center">
+                                        <form action="/forum/post?_method=DELETE" method="post" class="dropdown-item
+                                                        d-flex
+                                                        justify-content-around
+                                                        align-items-center
+                                                        pointer
+                                                        fs-7">
+                                            <input type="text" value="<%= post._id %>" name="postId" hidden>
+                                            <button class="
+                                                        
+                                                        submit-btn
+                                                      " type="submit">Delete Post</button>
+                                        </form>
+
+
+                                    </li>
+                                    <% }} %>
+
+                    </ul>
+                </div>
+                <hr>
+                <h2>
+                    <%= post.title %>
+                </h2>
+                <p>
+                    <%= post.body %>
+                </p>
+                <div class="text-center">
+                    <% if (post.imgURL) { %>
+                        <img src="<%= post.imgURL %>" alt="post image" class="img-fluid rounded fixed-size" />
+                        <% } %>
+                </div>
+
+                <h2>Comment</h2>
+                <!-- comments start-->
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item border-0">
+                        <!-- comment expand -->
+                        <div id="collapsePost1">
+                            <hr />
+                            <div class="accordion-body">
+                                <div class="comment-show">
+                                    <% post.reply.forEach((item, index)=> { %>
+                                        <% if (item.authorId.active === true) { %>
+                                        <!-- comment 1 -->
+                                        <div class="d-flex align-items-center my-1">
+                                            <!-- avatar -->
+
+                                            <div class="w-100">
+                                                <!-- author name and time -->
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="d-flex justify-content-start align-items-center">
+                                                        <img src="<%= item.authorId.profileImg %>" alt="avatar"
+                                                            class="rounded-circle me-2" style="
+                                                                                            width: 38px;
+                                                                                            height: 38px;
+                                                                                            object-fit: cover;
+                                                                                        " />
+                                                        <div>
+                                                            <p class="fw-bold m-0">
+                                                                <%= item.authorId.username %>
+                                                            </p>
+                                                            <span class="text-muted fs-7" id="postTimeline">
+                                                                <%=new Date(item.createdAt).toLocaleString()%>
+                                                            </span>
+                                                        </div>
+                                                    </span>
+                                                    <!-- comment menu of author -->
+                                                    <span>
+                                                        <div class="d-flex justify-content-end">
+                                                            <!-- icon -->
+                                                            <i class="fas fa-ellipsis-h text-blue pointer"
+                                                                id="post1CommentMenuButton" data-bs-toggle="dropdown"
+                                                                aria-expanded="false"></i>
+                                                            <!-- menu -->
+                                                            <ul class="dropdown-menu border-0 shadow"
+                                                                aria-labelledby="post1CommentMenuButton">
+                                                                <% if (typeof userId !="undefined" ) { %>
+                                                                    <% if ((role=="user" &&
+                                                                        userId.toString()==item.authorId._id.toString())
+                                                                        || role=="admin" ) { %>
+
+                                                                        <li class="d-flex align-items-center">
+                                                                            <form
+                                                                                action="/forum/reply/<%= item._id %>?_method=DELETE"
+                                                                                method="post" id="deleteButton"
+                                                                                class="dropdown-item d-flex justify-content-around align-items-center fs-7">
+                                                                                <input type="text"
+                                                                                    value='<%= post._id %>'
+                                                                                    name="postId" hidden>
+                                                                                <input type="text"
+                                                                                    value="<%= item.authorId._id %>"
+                                                                                    name="authorId" hidden>
+                                                                                <button class="submit-btn">Delete
+                                                                                    Comment</button>
+                                                                            </form>
+
+                                                                        </li>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                            </ul>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                                <!-- comment text -->
+                                                <p class="m-0 fs-7 bg-gray p-2 rounded mt-2">
+                                                    <%= item.body %>
+                                                </p>
+                                                <% if (item.imgURL) { %>
+                                                    <img src="<%= item.imgURL %>" alt="attached image"
+                                                        class="rounded mt-2" style="
+                                                    width: 200px;
+                                                    height: 200px;
+                                                    object-fit: center;
+                                                " />
+                                                    <% } %>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                        <% } )%>
+
+
+
+                                </div>
+                                <!-- create comment -->
+                                <form class="d-flex my-1 align-items-center position-relative" action="/forum/reply/"
+                                    method="post" enctype="multipart/form-data">
+                                    <!-- avatar -->
+                                    <div>
+                                        <img src="<%= profileImg %>" alt="avatar" class="rounded-circle me-2" style="
+                                            width: 38px;
+                                            height: 38px;
+                                            object-fit: cover;
+                                        " />
+                                    </div>
+                                    <!-- input with icons -->
+                                    <div class="position-relative flex-grow-1">
+                                        <!-- file upload icon -->
+                                        <label for="file-upload"
+                                            class="file-upload-label position-absolute start-0 top-50 translate-middle-y ms-3">
+                                            <i class="fa-solid fa-paperclip"></i>
+                                        </label>
+                                        <input type="file" id="file-upload" class="file-upload-input" name="img"
+                                            accept="image/png, image/jpeg" style="display: none;" />
+                                        <input type="text" name="postId" value="<%= post._id %>" hidden>
+
+                                        <!-- input -->
+                                        <input type="text" class=" form-control border-1 rounded-pill bg-gray ps-5 pe-5"
+                                            placeholder="Write a comment" name="body" id="comment-input" />
+                                        <!-- send icon -->
+                                        <button type="submit"
+                                            class="btn p-0 position-absolute end-0 top-50 translate-middle-y me-3">
+                                            <i class="fa-regular fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                    <br>
+
+                                </form>
+                                <div id="display_image" style="display: none;"><button id="clear_image"
+                                        class="btn btn-danger btn-sm" type="button">X</button></div>
+
+
+                                <!-- end -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <!-- Post cards format -->
+
+        <!-- Edit Post Modal -->
+        <div class="modal fade" id="editPostModal" tabindex="-1" aria-labelledby="editPostModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editPostModalLabel">Edit Post</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editPostForm" action="/forum/post?_method=PUT" method="POST">
+                            <input type="text" name="postId" value="<%= post._id%>" hidden>
+                            <div class="form-group">
+                                <label for="editPostTitle">Title:</label>
+                                <input type="text" class="form-control" id="editPostTitle" name="title"
+                                    value="<%= post.title %>">
+                            </div>
+
+                            <% if (post.imgURL) { %>
+                                <img src="<%= post.imgURL %>" alt="Post Image" class="img-fluid">
+                                <% } else { %>
+                                    <p>No image available for this post.</p>
+                                    <% } %>
+
+                                        <div class="form-group">
+                                            <label for="editPostBody">Body:</label>
+                                            <textarea class="form-control" id="editPostBody" name="body"
+                                                rows="5"><%= post.body %></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JS -->
+        <script>
+            function showEditPostModal() {
+                const modal = document.getElementById('editPostModal');
+                modal.classList.add('show');
+                modal.style.display = 'block';
+            }
+
+            function hideEditPostModal() {
+                const modal = document.getElementById('editPostModal');
+                modal.classList.remove('show');
+                modal.style.display = 'none';
+            }
+
+            const image_input = document.querySelector("#file-upload");
+            var uploaded_image = "";
+
+            image_input.addEventListener("change", function () {
+
+                const reader = new FileReader();
+
+
+                reader.addEventListener("load", () => {
+                    uploaded_image = reader.result;
+                    console.log(uploaded_image);
+                    document.querySelector("#display_image").style = 'block'
+                    document.querySelector("#display_image").style.backgroundImage = `url("${uploaded_image}")`;
+                });
+
+                reader.readAsDataURL(this.files[0]);
+            });
+            const clearImg = document.querySelector('#clear_image')
+            clearImg.addEventListener('click', () => {
+
+
+                document.querySelector("#display_image").style.display = 'none'
+                document.querySelector("#display_image").style.backgroundImage = ``;
+                document.getElementById('file-upload').value = ''; // Clear the file input value
+
+
+            })
+
+        </script>
+
+        <%- include('../main/footer.ejs') %>

@@ -1,0 +1,15 @@
+.policyPage {
+    margin-left:30px;
+}
+
+.policyPage h2 {
+    margin-bottom: 20px;
+}
+
+.policyPage h5 {
+    margin-bottom: 20px;
+}
+
+.dark-mode .policyPage {
+    color: white;
+}

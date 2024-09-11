@@ -1,0 +1,47 @@
+<%- include('../main/header.ejs') %>
+    <%- include('../main/navbar.ejs') %>
+        <!-- Products page -->
+        <link rel="stylesheet" href="/stylesheets/admin.css">
+        <form class="forumFilter" action="/admin/products/search" method="get">
+            <div class="forumSearchBox">
+                <button class="btnSearch"><i class="fas fa-search"></i></button>
+                <input type="text" class="forumInputSearch" placeholder="Search by product name" name="q">
+            </div>
+        </form>
+        <div class="container">
+            <div class="row row-cols-4">
+                <% products.forEach((e)=> { %>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="<%= e.mainImg %>" alt="Card image cap">
+                            <div class="card-body d-flex flex-column">
+                                <h3 class="card-title">
+                                    <%= e.name %>
+                                </h3>
+                                <p><b>Category: </b>
+                                    <%= e.category %>
+                                </p>
+                                <p><b>Brand: </b>
+                                    <%= e.brand %>
+                                </p>
+                                <p><b>Price: </b>
+                                    $<%= parseFloat(e.price).toFixed(2) %>
+                                </p>
+                                <div class="mt-auto d-flex justify-content-around">
+                                    <form action="/admin/products/<%= e._id %>" method="get">
+                                        <button class="btn btn-primary">View</button>
+                                    </form>
+
+                                    <form action="/admin/products/<%= e._id %>?_method=DELETE" method="post"
+                                        id="deleteButton">
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+            </div>
+        </div>
+
+        <%- include('../main/footer.ejs') %>

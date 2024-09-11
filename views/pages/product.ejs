@@ -1,0 +1,208 @@
+<%- include('../main/header') %>
+    <%- include('../main/navbar') %>
+        <!-- CSS -->
+        <link rel="stylesheet" href="/stylesheets/product.css">
+        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert" id="alert-card"
+            style="display: none;">
+            <strong>Duplicate product in cart</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="close-alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="container" id="product">
+            <div class="row equal-height">
+                <div class="col-md-7" id="productCarouselCols">
+                    <!-- Carousel -->
+                    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="productCarouselImg">
+                            <div class="carousel-item active">
+                                <img src="<%= product.mainImg %>" alt="Product image" loading="lazy">
+                            </div>
+                            <% product.subImg.forEach(function(image) { %>
+                                <div class="carousel-item">
+                                    <img src="<%= image %>" alt="Product image" loading="lazy">
+                                </div>
+                                <% }); %>
+                        </div>
+
+                        <!-- Carousel controls -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel"
+                            data-bs-slide="prev" id="productCarouselButton">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel"
+                            data-bs-slide="next" id="productCarouselButton">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                    <style>
+                        .indicator-img {
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 10px !important;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+
+                        .carouselTargetButton {
+                            width: 50px;
+                            height: 50px;
+                            border: none !important;
+                            border-radius: 10px !important;
+                            padding: 0px !important;
+                        }
+                    </style>
+
+                    <div class="carousel-indicator">
+                        <button class="carouselTargetButton active" type="button" data-bs-target="#productCarousel"
+                            data-bs-slide-to="0" aria-current="true" aria-label="Slide 1">
+                            <img src="<%= product.mainImg %>" alt="Slide 1" class="carouselTargetImg" loading="lazy">
+                        </button>
+                        <% product.subImg.forEach(function(image, index) { %>
+                            <button class="carouselTargetButton" type="button" data-bs-target="#productCarousel"
+                                data-bs-slide-to="<%= index + 1 %>" aria-label="Slide <%= index + 2 %>">
+                                <img src="<%= image %>" alt="Slide <%= index + 2 %>" class="carouselTargetImg"
+                                    loading="lazy">
+                            </button>
+                            <% }); %>
+                    </div>
+                </div>
+
+                <div class="col-md-5" id="productDetailCols" loading="lazy">
+                    <!-- Product details -->
+                    <div id="productDetail" class="d-flex flex-column" style="height: 100%;">
+                        <h1>
+                            <%= product.name %>
+                        </h1>
+                        <hr>
+
+                        <button id="showProductModal" class="btn">Show Product Specs</button>
+
+                        <div class="mt-auto">
+                            <hr>
+                            <h5>
+                                <% if (product.quantity> 0) { %>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <span class="price">Price: <span style="color: red; font-weight: bold;">
+                                                        $<%= parseFloat(product.price).toFixed(2) %>
+                                                    </span></span>
+                                            </div>
+                                            <div class="row">
+                                                <span>Instock: <%= product.quantity %></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12 col-lg-6 text-right p-3">
+                                            <form action="/cart/buyNow/<%= product._id %>" id="buyNow" method="post">
+                                                <button id="buyNowButton" class="btn w-100 h-100" form="buyNow">
+                                                    Add to cart </button>
+                                            </form>
+                                        </div>
+                                        <div class="col-12 col-md-12 col-lg-6 text-right p-3">
+                                            <form action="/cart/addToCart/<%= product._id %>" id="addToCart"
+                                                method="post">
+                                                <button id="addToCartButton" class="btn w-100 h-100" form="addToCart">
+                                                    Buy now
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <% } else { %>
+                                        <h4 style="color: red; text-align: center;">
+                                            <strong>Product currently out
+                                                of stock</strong>
+                                        </h4>
+                                        <% } %>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 product-description" id="productDescriptionCols">
+                    <!-- Product video -->
+                    <% if (product.videoUrl) { %>
+                        <iframe width="100%" height="512" src="<%= product.videoUrl %>" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen onerror="this.style.display='none'" loading="lazy"></iframe>
+                        <% } %>
+
+                            <!-- Product description -->
+                            <div class="descriptionDetails">
+                                <h2 style="text-align: center; color: red; font-weight: bold;">
+                                    <%= product.name %> detail
+                                </h2>
+                                <p id="productDescription" style="overflow: hidden; max-height: 200px;">
+                                    <%= product.description %>
+                                </p>
+                                <a href="#" id="toggleDescription" style="display: none;">Read More</a>
+                            </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productModalLabel">
+                            <%= product.name %>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Product details -->
+
+                        <p>Brand: <span id="productBrand"></span></p>
+                        <p>Category: <span id="productCategory"></span></p>
+                        <% if (product.ram) { %>
+                            <p>RAM: <span id="productRAM">
+                                    <%= product.ram %>
+                                </span></p>
+                            <% } %>
+                                <% if (product.storage) { %>
+                                    <p>Storage: <span id="productStorage">
+                                            <%= product.storage %>
+                                        </span></p>
+                                    <% } %>
+                                        <p>Quantity: <span id="productQuantity"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JS -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var showModalButton = document.getElementById('showProductModal');
+                var productModal = new bootstrap.Modal(document.getElementById('productModal'));
+
+                showModalButton.addEventListener('click', function () {
+                    // Populate modal with product information
+
+                    document.getElementById('productBrand').innerText = '<%= product.brand %>';
+                    document.getElementById('productCategory').innerText = '<%= product.category %>';
+                    if (product.ram) {
+                        document.getElementById('productRAM').innerText = '<%= product.ram %>';
+                    }
+                    if (product.storage) {
+                        document.getElementById('productStorage').innerText = '<%= product.storage %>';
+                    }
+                    document.getElementById('productQuantity').innerText = '<%= product.quantity %>';
+
+
+                    // Show modal
+                    productModal.show();
+                });
+            });
+        </script>
+        <script src="/js/product.js"></script>
+
+        <%- include('../main/review') %>
+            <%- include('../main/footer') %>

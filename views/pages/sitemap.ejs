@@ -1,0 +1,86 @@
+<%- include('../main/header') %>
+    <%- include('../main/navbar') %>
+        <style>
+            #sitemap {
+                margin-left: 12rem;
+                margin-top: 4rem;
+            }
+
+            .dark-mode #sitemap {
+                color: white;
+            }
+
+            #sitemap a {
+                color: black;
+                text-decoration: none;
+                transition: ease 0.3s;
+            }
+
+            .dark-mode #sitemap a {
+                color: white;
+            }
+
+            #sitemap a:hover {
+                color: blue;
+                text-decoration: underline;
+            }
+
+            .dark-mode #sitemap a:hover {
+                color: #ffc107;
+                text-decoration: underline;
+            }
+
+            @media screen and (max-width: 992px) {
+                #sitemap {
+                    margin-left: 2rem;
+                    margin-top: 2rem;
+                }
+            }
+
+            @media screen and (max-width: 768px) {
+                #sitemap {
+                    width: 90%;
+                    margin: auto;
+                }
+                #sitemap h1 {
+                    text-align: center;
+                }
+            }
+        </style>
+        <nav id="sitemap">
+            <h1>B1Nance Sitemap</h1>
+            <% xml.forEach(function(p) { %>
+                <% if (!p.includes('id') && !p.includes('Id')) { %>
+                    <% if (p !=='/catalog/:category/:brand' && p !=='/products' && p !=='/products/search' && p
+                        !=='/forum/search' ) { %>
+                        <% if (p==='/catalog/:category' ) { %>
+                            <% Object.keys(category).forEach((key)=> { %>
+                                <li>
+                                    <a href="catalog/<%= key %>">
+                                        /catalog/<%= key %>
+                                    </a>
+                                    <% if (category[key].brands) { %>
+                                        <ul>
+                                            <% category[key].brands.forEach((brand)=> { %>
+                                                <li>
+                                                    <a href="catalog/<%= key %>/<%= brand %>">
+                                                        /catalog/<%= key %>/<%= brand %>
+                                                    </a>
+                                                </li>
+                                                <% }) %>
+                                        </ul>
+                                        <% } %>
+                                </li>
+                                <% }) %>
+                                    <% } else { %>
+                                        <li>
+                                            <a href="<%= p %>">
+                                                <%= p==='/' ? '/home' : p %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                            <% } %>
+                                                <% } %>
+                                                    <% }) %>
+        </nav>
+        <%- include('../main/footer') %>

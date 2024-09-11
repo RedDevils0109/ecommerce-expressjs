@@ -1,0 +1,95 @@
+<%- include('../main/header.ejs') %>
+    <%- include('../main/navbar.ejs') %>
+    <div>
+        <label for="filter"> Group By</label>
+        <select name="filter" id="filter">
+            <option value="name">name</option>
+            <option value="date">date</option>
+            <option value="status">status</option>
+        </select>
+        <label for="order-by"> Order By</label>
+        <select name="order-by" id="order-by">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+    </div>
+    
+    <div id="order-list">
+        <% orders.forEach(item => {%>
+            <span date="<%= new Date(item.createdAt).toLocaleString() %>"
+                  name="<%= item.userId.name %>" 
+                  status="<%= item.status %>">
+                <%- include('../components/card.ejs', {item: item}) %>
+            </span>
+        <% }) %>
+    </div>
+
+<%- include('../main/footer.ejs') %>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const orderList = document.getElementById("order-list")
+    const orders = [...document.querySelectorAll("#order-list span")]
+
+    function renderOrders(orders) {
+        orderList.innerHTML = ""
+        orders.forEach(order => {
+            orderList.appendChild(order)
+        })
+    }
+
+    function groupBy(key) {
+        const groupedOrders = {}
+
+        orders.forEach(order => {
+            const groupValue = order.getAttribute(key)
+            if (!groupedOrders[groupValue]) {
+                groupedOrders[groupValue] = []
+            }
+            groupedOrders[groupValue].push(order)
+        })
+
+        return groupedOrders
+    }
+
+    function orderBy(key, direction) {
+        return function (a, b) {
+            if (key === "date") {
+                const dateA = new Date(a.getAttribute("date"))
+                const dateB = new Date(b.getAttribute("date"))
+                if (direction === 'asc') {
+                    return dateA - dateB
+                } else {
+                    return dateB - dateA
+                }
+            } else if (direction === 'asc') {
+                return a.getAttribute(key).localeCompare(b.getAttribute(key))
+            } else {
+                return b.getAttribute(key).localeCompare(a.getAttribute(key))
+            }
+        }
+    }
+
+    document.getElementById("filter").addEventListener("change", function () {
+        const groupKey = this.value
+        const groupedOrders = groupBy(groupKey)
+        renderOrders(Object.values(groupedOrders).flat())
+    })
+
+    document.getElementById("order-by").addEventListener("change", function () {
+        const groupKey = document.getElementById("filter").value
+        const direction = this.value === "asc" ? "asc" : "desc"
+        const groupedOrders = groupBy(groupKey)
+
+        const sortedOrders = Object.values(groupedOrders).flat()
+        .sort(orderBy(groupKey, direction))
+
+        renderOrders(sortedOrders)
+    })
+
+    document.getElementById("status").addEventListener("click", function (event) {
+        event.stopPropagation()
+    })
+})
+</script>

@@ -1,0 +1,42 @@
+.fixed-size {
+    max-width: 80%;
+    max-height: 600px;
+    object-fit: center;
+}
+
+.dark-mode .accordion-item,.dark-mode  #postTimeline {
+    background-color: #28282B;
+    color: white !important;
+}
+
+.comment-show {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+#display_image {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    background-position: center;
+    background-size: contain;
+}
+
+#comment-input:focus {
+    border: 1px solid #80bdff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.submit-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+}
+
+.dark-mode #postDetails {
+    background-color: #28282B !important;
+    color: white;
+}

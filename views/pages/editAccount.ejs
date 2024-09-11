@@ -1,0 +1,154 @@
+<%- include('../main/header') %>
+    <%- include('../main/navbar') %>
+        <!-- CSS -->
+        <link rel="stylesheet" href="/stylesheets/editInfo.css">
+
+        <!-- Account edit pagge -->
+        <div class="container ">
+            <form action=" /account/edit/<%= user._id %> " method="post" class="row g-3 p-3"
+                enctype="multipart/form-data">
+                <div class="d-flex flex-column justify-content-center">
+                    <div id="display_image" style="background-image: url('<%= user.profileImg %>');"></div>
+
+                    <div id="wrap">
+                        <button id="customButton" class="btn-danger" type="button">Choose File</button>
+                        <input type="file" name="image" id="image_input" accept="image/png, image/jpeg"
+                            style="display: none;">
+                    </div>
+                    <span id="fileName"></span>
+                </div>
+
+                <div class="col-md-8">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" value="<%= user.name %>" required>
+                </div>
+
+                <div class="col-md-8">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="name" name="username" value="<%= user.username%>"
+                        required>
+                </div>
+                <div class="col-md-8">
+                    <label for="phone" class="form-label">Number</label>
+                    <input type="number" class="form-control" id="phone" name="phone" value="<%= user.phone%>" required>
+                </div>
+                <br>
+                <p id="changePassTitle">Update your password
+                <p style="color: red;">
+                    <%= message %>
+                </p>
+                <a href="#" id="changePass" data-bs-toggle="modal" data-bs-target="#passwordChangeModal">
+                    here
+                </a>
+                </p>
+                <div class="col-md-8" id="confirmChange">
+                    <button class="btn col-6 col-md-4 col-sm-3">Confirm</button>
+                </div>
+            </form>
+
+            <!-- Modal -->
+            <div class="modal fade" id="passwordChangeModal" tabindex="-1" aria-labelledby="passwordChangeModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="passwordChangeModalLabel">Change Password</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="passwordChangeForm" action="/change-password" method="POST">
+                                <div class="mb-3">
+                                    <label for="currentPassword" class="form-label">Current Password</label>
+                                    <input type="password" class="form-control" id="currentPassword" name="oldPass"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newPassword" class="form-label">New Password</label>
+                                    <input type="password" class="form-control" id="newPassword" name="newPass"
+                                        required>
+                                    <div id="passwordError" class="error text-danger mt-2"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
+                                    <input type="password" class="form-control" id="confirmNewPassword"
+                                        name="confirmNewPassword" required>
+                                    <div id="reEnterError" class="error text-danger mt-2"></div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" form="passwordChangeForm" class="btn btn-primary"
+                                id="change-pass">Update
+                                Password</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JS -->
+        <script>
+            var imageInput = document.getElementById('image_input');
+            var customButton = document.getElementById('customButton');
+            var fileName = document.getElementById('fileName');
+
+            customButton.addEventListener('click', function (event) {
+                event.preventDefault();
+                imageInput.click();
+            });
+
+            imageInput.addEventListener('change', function () {
+                if (imageInput.value) {
+                    // Extract the file name from the full file path
+                    var filePath = imageInput.value;
+                    var startIndex = (filePath.indexOf('\\') >= 0 ? filePath.lastIndexOf('\\') : filePath.lastIndexOf('/'));
+                    var filename = filePath.substring(startIndex);
+                    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                        filename = filename.substring(1);
+                    }
+
+                    fileName.textContent = 'File Chosen: ' + filename;
+                }
+            });
+
+            document.getElementById('triggerForm').addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('triggerActiveAccount').submit();
+            });
+            document.addEventListener('DOMContentLoaded', function () {
+                // const passwordChangeForm = document.getElementById('passwordChangeForm');
+                // const newPasswordInput = document.getElementById('newPassword');
+                // const confirmNewPasswordInput = document.getElementById('confirmNewPassword');
+                // const passwordError = document.getElementById('passwordError');
+
+                // passwordChangeForm.addEventListener('submit', function (event) {
+                //     // Check if passwords match
+                //     if (newPasswordInput.value !== confirmNewPasswordInput.value) {
+                //         event.preventDefault();
+                //         passwordError.textContent = "Passwords do not match";
+                //         newPasswordInput.classList.add('is-invalid');
+                //         confirmNewPasswordInput.classList.add('is-invalid');
+                //     } else {
+                //         passwordError.textContent = "";
+                //         newPasswordInput.classList.remove('is-invalid');
+                //         confirmNewPasswordInput.classList.remove('is-invalid');
+                //     }
+                // });
+
+                // // const updatePasswordButton = document.getElementById('updatePasswordButton');
+                // const updatePasswordButton1 = document.getElementById('updatePasswordButton');
+                // const updatePasswordButton2 = document.getElementById('updatePasswordButton2');
+
+                function showModal() {
+                    const passwordChangeModal = new bootstrap.Modal(document.getElementById('passwordChangeModal'));
+                    passwordChangeModal.show();
+                }
+
+                updatePasswordButton1.addEventListener('click', showModal);
+                updatePasswordButton2.addEventListener('click', showModal);
+            });
+        </script>
+        <script src="/js/editInfo.js"></script>
+
+        <%- include('../main/footer') %>

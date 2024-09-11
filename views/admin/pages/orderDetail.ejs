@@ -1,0 +1,68 @@
+<%- include('../main/header.ejs') %>
+    <%- include('../main/navbar.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/order.css">
+        <div class="wrapper">
+            <h1>Details of <i><%= order.userId.name %></i>'s order.</h1>
+            <div class="product">
+                <div class="h4">Deliver Info</div>
+                <div class="orderStatus">
+                    <p>Order Status: <%= order.status %></p> 
+                </div>
+                <div class="date">
+                    <p>Order placed: <%= new Date(order.createdAt).toLocaleString() %></p>
+                </div>
+
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <b>Address</b>: <%= order.address %>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Email</b>:  <%= order.email %>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Phone</b>:  <%= order.phone %>
+                    </li>
+                </ul>
+            </div>
+
+            <!--Product section-->
+            <% order.products.forEach( item => { %>
+                <div class="product">   
+                    <div class="productDetails">
+                        <!--image-->
+                        <img src="<%= item.productId.mainImg%>" alt="<%= item.productId.name %>" width="160">
+                        <!--product name and price-->
+                        <div class="nameAndPrice">
+                            <div class="productName">
+                                <h5>
+                                    <%= item.productId.name %>
+                                </h5>
+                            </div>
+                            <div class="prices" style="font-weight: bold;">
+                                $<%= item.productId.price.toFixed(2) %>
+                            </div>
+                            <div class="quantity">
+                                Quantity: <%= item.quantity %>
+                            </div>
+                        </div>
+                    </div> 
+                 </div>
+                <% }) %>
+            <div class="fixPriceBar">
+                <div class="totalPrice">
+                    <div>Total price</div>
+                    <div class="totalPrice" id="fixBarPrice">$<%= order.total %></div>
+                </div>
+                <form id="orderForm" action="/order/admin-update?_method=PUT" method="post">
+                    <input type="text" value="<%= order._id %>" name="orderId" hidden>
+                    <select name="status" id="status" class="form-select">
+                        <option value="Delivered" <% if (order.status === 'Delivered') { %> selected <% } %>>Delivered</option>
+                        <option value="Delivering" <% if (order.status === 'Delivering') { %> selected <% } %>>Delivering</option>
+                        <option value="Cancel" <% if (order.status === 'Cancel') { %> selected <% } %>>Cancel</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>      
+            </div>
+        </div>
+        
+        <%- include('../main/footer.ejs') %>

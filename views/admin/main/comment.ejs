@@ -1,0 +1,45 @@
+<% comments.forEach((comment)=> { %>
+    <div class="row">
+        <!-- Comment -->
+        <div class="col-8">
+            <div class='card mb-3'>
+                <div class="card-body">
+                    <!-- Author name and time -->
+                    <p class="card-title d-flex justify-content-between">
+                        <%= comment.authorName %>
+                            <span><i>
+                                    <%= comment.createdAt.toLocaleString(undefined, { dateStyle: 'medium' ,
+                                        timeStyle: 'short' , hour12: false }) %>
+                                </i>
+                            </span>
+                    </p>
+                    <hr>
+
+                    <!-- Rating stars -->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="ratings">
+                            <% for (let i=0; i < comment.rating; i++) { %>
+                                <i class="fa fa-star" style="color: #ffc107;"></i>
+                                <% } %>
+                                    <% for (let i=0; i < 5 - comment.rating; i++) { %>
+                                        <i class="fa fa-star "></i>
+                                        <% } %>
+                        </div>
+                    </div>
+
+                    <!-- Comment content -->
+                    <p class="card-text">
+                        <%= comment.body %>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete comment -->
+        <div class="col-2">
+            <form action="/admin/comments/<%= comment._id %>?_method=DELETE" method="post">
+                <button type="submit" class="btn btn-danger">Delete</a>
+            </form>
+        </div>
+    </div>
+    <% }); %>

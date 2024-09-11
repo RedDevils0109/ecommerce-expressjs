@@ -1,0 +1,43 @@
+<%- include('../main/header', {title: "Login" })%>
+    <!--css-->
+    <link rel="stylesheet" href="/stylesheets/log-in.css">
+
+    <!-- Login page -->
+    <div id="loginpage" style="overflow: hidden;">
+        <img src="https://wallpapers.com/images/hd/pastel-minimalist-scenic-mountain-range-9dgdqcm4wekwcots.jpg" alt=""
+            id="backgroundlogin">
+
+        <form action="/login" method="post" class="login-form">
+            <div class="login-title">
+                <a href="/"><img src="/images/binanceLogo.png" alt="logo" id="loginlogo"></a>
+            </div>
+            <h2>Already have an account?</h2>
+            <% if (typeof message !="undefined" ) { %>
+                <p style="color: red;">
+                    <%= message %>
+                </p>
+                <% } %>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1"><b>Email address</b></label>
+                        <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email"
+                            type="email" required placeholder="youremail@email.com">
+                        <div id="emailError" class="error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1"><b>Password</b></label>
+                        <input type="password" class="form-control" id="exampleInputPassword1"
+                            placeholder="At least 6 characters" name="password" required>
+                        <div id="passwordError" class="error"></div>
+                    </div>
+                    <div class="g-recaptcha" data-sitekey="6LfctN8pAAAAAFQ96J14aLmx1Oj7lKoeB0OY6GO6"></div>
+            <!-- <br/> -->
+                    <button type="submit" id="button">Log In</button>
+        </form>
+        
+        <div class="signUp">
+            <p>Forget Your Password? <a href="/reset"> Reset</a></p><br>
+            <p>Don't have an account? <a href="/signUp"> Sign Up</a></p>
+        </div>
+    </div>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>

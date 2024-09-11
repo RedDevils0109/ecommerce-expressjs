@@ -1,0 +1,66 @@
+<%- include('../main/header') %>
+    <!--css-->
+    <link rel="stylesheet" href="/stylesheets/sign-up.css">
+
+    <!-- Sign up page -->
+    <div id="signuppage" style="overflow: hidden;">
+        <img src="https://wallpapers.com/images/hd/pastel-minimalist-scenic-mountain-range-9dgdqcm4wekwcots.jpg" alt=""
+            id="backgroundlogin">
+
+        <form action="/signup" method="post"> <a href="/"><img src="/images/binanceLogo.png" alt="logo"></a>
+            <h2>Create Account</h2>
+
+            <div class="form-group nameGroup">
+                <label class="nameLabel" for="exampleInputName"><b>Your name</b></label>
+                <input type="name" class="form-control" id="exampleInputName" aria-describedby="nameHelp"
+                    placeholder="Enter your name" name="name">
+                <div id="nameError" class="error"></div>
+            </div>
+
+            <div class="form-group nameGroup">
+                <label class="nameLabel" for="exampleInputName"><b>Username</b></label>
+                <input type="username" class="form-control" id="exampleInputName" aria-describedby="nameHelp"
+                    placeholder="Enter your username" name="username">
+                <div id="nameError" class="error"></div>
+            </div>
+
+            <div class="form-group emailGroup">
+                <label class="emailLabel" for="exampleInputEmail1"><b>Email address</b></label>
+                <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    placeholder="example@email.com" name="email">
+                <div id="emailError" class="error"></div>
+            </div>
+            <div class="form-group phoneGroup">
+                <label class="phoneLabel" for="exampleInputPhone"><b>Phone Numher</b></label>
+                <input class="form-control" id="exampleInputPhone" aria-describedby="phoneHelp" placeholder="092332312"
+                    name="number">
+                <div id="phoneError" class="error"></div>
+            </div>
+
+            <div class="form-group passwordGroup">
+                <label for="exampleInputPassword1"><b>Password</b></label>
+                <input type="password" class="form-control" id="exampleInputPassword1"
+                    placeholder="At least 6 character" name="password">
+                <div id="passwordError" class="error"></div>
+            </div>
+
+            <div class="form-group reEnterPasswordGroup">
+                <label for="exampleInputPassword2"><b>Re-enter password</b></label>
+                <input type="password" class="form-control" id="exampleInputPassword2"
+                    placeholder="Re-enter your password">
+                <div id="reEnterError" class="error"></div>
+            </div>
+
+            <div class="g-recaptcha" data-sitekey="6LfctN8pAAAAAFQ96J14aLmx1Oj7lKoeB0OY6GO6"></div>
+            <div class="signUp">
+                <p>Already have account ? <a href="/login"> Login</a></p>
+            </div>
+            <!-- <br/> -->
+
+            <button type="submit" id="button">Create Account</button>
+        </form>
+    </div>
+
+    <!-- JS -->
+    <script src="/js/sign-up.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>

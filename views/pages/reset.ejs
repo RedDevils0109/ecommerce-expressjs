@@ -1,0 +1,61 @@
+<%- include('../main/header') %>
+    <!--css-->
+    <link rel="stylesheet" href="/stylesheets/sign-up.css">
+
+    <!-- Sign up page -->
+    <div id="signuppage" style="overflow: hidden;">
+        <img src="https://wallpapers.com/images/hd/pastel-minimalist-scenic-mountain-range-9dgdqcm4wekwcots.jpg" alt=""
+            id="backgroundlogin">
+
+        <form id="resetForm" method="post" action="/reset"> 
+            <a href="/"><img src="/images/binanceLogo.png" alt="logo"></a>
+            <h2>Reset Password</h2>
+            <div id="resetError" class="error">
+                <% if (typeof message != undefined) { %>
+                    <%= message %>
+                <% } %>
+            </div>
+
+            <div class="form-group nameGroup">
+                <label class="nameLabel" for="exampleInputName"><b>Username</b></label>
+                <input type="username" class="form-control" aria-describedby="nameHelp"
+                    placeholder="Enter your username" name="username" id="username">
+                <div id="nameError" class="error"></div>
+            </div>
+
+            <div class="form-group emailGroup">
+                <label class="emailLabel" for="exampleInputEmail1"><b>Email address</b></label>
+                <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    placeholder="example@email.com" name="email">
+                <div id="emailError" class="error"></div>
+            </div>
+
+            <div class="form-group passwordGroup">
+                <label for="exampleInputPassword1"><b>New Password</b></label>
+                <input type="password" class="form-control" id="exampleInputPassword1"
+                    placeholder="At least 6 character" name="newPassword" id="newPassword">
+                <div id="passwordError" class="error"></div>
+            </div>
+
+            <div class="form-group reEnterPasswordGroup">
+                <label for="exampleInputPassword2"><b>Re-enter password</b></label>
+                <input type="password" class="form-control" id="exampleInputPassword2"
+                    placeholder="Re-enter your password">
+                <div id="reEnterError" class="error"></div>
+            </div>
+
+            <div class="g-recaptcha" data-sitekey="6LfctN8pAAAAAFQ96J14aLmx1Oj7lKoeB0OY6GO6"></div>
+            <div class="signUp">
+                <p>Already have account ? <a href="/log-in"> Login</a></p>
+                <p>New User ? <a href="/signUp"> Sign-up</a></p>
+
+            </div>
+            <!-- <br/> -->
+
+            <button type="submit" id="button">Reset</button>
+        </form>
+    </div>
+
+    <!-- JS -->
+    <script src="/js/reset.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
